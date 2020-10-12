@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // Resources
-// Route::resource('Registration', AccountController::class);
+ Route::resource('product', ProductController::class);
 
 
 // Auth::routes();
