@@ -1,0 +1,164 @@
+/* Global */
+:root {
+    --bg-color: #483d8b;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Radiance";
+    src: url("/fonts/Radiance.woff");
+}
+body {
+    font-family: radiance, Arial, sans-serif;
+    overflow-x: hidden;
+}
+/* Start of navbar */
+.left-navbar {
+    width: 180px;
+    padding: 16px;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    transform: translateX(0%) !important;
+    transition: transform 0.5s;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+}
+
+/* for navbar links */
+.left-navbar-links {
+    height: 100%;
+    display: flex;
+    margin: 50px auto 0 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.left-navbar-links a {
+    margin: 15px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: #fff;
+}
+
+.left-navbar-links a:hover {
+    color: #48d1cc;
+}
+
+.items-hide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: none;
+}
+
+.items-hide a {
+    margin: 10px 50px;
+    font-size: 1.1rem;
+}
+
+.items-active {
+    display: block !important;
+}
+
+/* navbar icons */
+.icons {
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.left-navbar-link-active {
+    color: #48d1cc !important;
+}
+
+/* for hamburger navbar */
+.hamburger {
+    height: 30px;
+    width: 35px;
+    margin: 15px;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.hamburger-active {
+    /*margin-bottom: 200px;*/
+}
+
+.line1,
+.line2,
+.line3 {
+    background-color: #fff;
+    margin: 5px 0;
+    height: 4px;
+    border-radius: 10px;
+    transition: transform 0.5s;
+}
+
+.line1-style {
+    display: none;
+    margin: none;
+}
+
+.line2-style {
+    transform: rotate(220deg);
+    margin: 13px -7px 7px 1px;
+}
+
+.line3-style {
+    transform: rotate(140deg);
+    margin: -10px -7px -7px -1px;
+}
+
+/* Hamburger - Active */
+.left-navbar-links-active {
+    width: 80px !important;
+}
+
+.active {
+    display: none;
+}
+
+/* table */
+
+.main-container {
+    padding: 3%;
+}
+
+@media (max-width: 992px) {
+    /*for navbar*/
+    .left-navbar-links {
+        margin: 100px auto 0 auto;
+    }
+
+    .left-navbar-links a {
+        font-size: 0.8rem;
+    }
+
+    .left-navbar-links-active {
+        justify-content: center;
+        align-items: center;
+    }
+    .main-container {
+        padding: 2%;
+    }
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 576px) {
+}

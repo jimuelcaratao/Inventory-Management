@@ -36,6 +36,12 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+
+                                @if (\Session::has('message'))
+                                    <span id="element" class=" alert" role="alert" >
+                                        <strong>{{ \Session::get('message') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 

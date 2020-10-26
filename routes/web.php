@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -16,22 +17,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // basic routing
-// Route::get('/', function () {
-//     return view('home');
-// });
+Route::get('/', function () {
+    return view('landing');
+});
 
 // Route::get('/login', function () {
 //     return view('login');
 // });
+// Route::get('/product', [ProductController::class, 'advanceSearch']);
 
-// Resources
- Route::resource('product', ProductController::class);
+Route::resource('/products', ProductController::class);
 
 
 // Auth::routes();
 Auth::routes();
 
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/product', [App\Http\Controllers\ProductController::class, 'index'])->name('product');
+Route::get('/admin', [App\Http\Controllers\HomeAdminController::class, 'index'])->name('admin.home')->middleware('is_admin');
 
+Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products')->middleware('is_admin');
+
+
+
+// Resources
+
+//  Route::resource('product', CategoryController::class)->only([
+//     'index', 'show'
+// ]);
