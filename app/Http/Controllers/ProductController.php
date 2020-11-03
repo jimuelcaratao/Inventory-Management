@@ -87,6 +87,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        return 100;
     }
 
 

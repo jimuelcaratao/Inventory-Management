@@ -10,13 +10,13 @@
 <div class="left-navbar" id="left-navbar">
   <!-- for navbar links -->
   <div class="left-navbar-links">
-      <a href="{{ URL::route('admin.home') }}" class="navbar-link-active"><i class="fas fa-columns icons"></i><span class="navbar-span">Home</span></a>
-      <a href="{{ URL::to('products') }}"><i class="fas fa-box-open icons"></i><span class="navbar-span">Items</span></a>
-      <a href="#"><i class="fas fa-clipboard icons"></i><span class="navbar-span">Category</span></a>
-      <a href="#"><i class="fas fa-tags icons"></i><span class="navbar-span">Brand</span></a>
-      <a href="#"><i class="fas fa-phone icons"></i><span class="navbar-span">Supplier</span></a>
-      <a href="#"><i class="fas fa-file-invoice icons"></i><span class="navbar-span">Invoice</span></a>
-      <a href="#"><i class="fas fa-chart-bar icons"></i><span class="navbar-span">Analytics</span></a>
+      <a href="{{ URL::to('admin') }}" ><i class="fas fa-columns icons icon_color"></i><span class="navbar-span">Home</span></a>
+      <a href="{{ URL::to('products') }}" class="navbar-link-active"><i class="fas fa-box-open icons icon_color"></i><span class="navbar-span">Items</span></a>
+      <a href="{{ URL::to('categories') }}"><i class="fas fa-clipboard icons icon_color"></i><span class="navbar-span">Category</span></a>
+      <a href="{{ URL::to('brands') }}"><i class="fas fa-tags icons icon_color"></i><span class="navbar-span">Brand</span></a>
+      <a href="{{ URL::to('suppliers') }}"><i class="fas fa-phone icons icon_color"></i><span class="navbar-span">Supplier</span></a>
+      <a href="{{ URL::to('invoices') }}"><i class="fas fa-file-invoice icons icon_color"></i><span class="navbar-span">Invoice</span></a>
+      <a href="{{ URL::to('analytics') }}"><i class="fas fa-chart-bar icons icon_color"></i><span class="navbar-span">Analytics</span></a>
   </div>
   <!-- for navbar hambuger -->
   <div class="hamburger" id="hamburger-nav">
@@ -39,6 +39,7 @@
         <p>{{ \Session::get('success') }}</p>
       </div>
     @endif
+    {{-- end of alerts --}}
 
 <div class="container main-container ">
   <div class="row">
@@ -47,9 +48,10 @@
     </div>
     <div class="col-10 col-lg-11 ">
       <div class="container custom-container pl-5">
+        {{-- contents --}}
         <div class="row ">
           <div class="col">
-            <h1>Products</h1>
+            <h3>Products</h3>
           </div>
         </div>
         <div class="row py-4">
@@ -57,16 +59,7 @@
             {{-- search --}}
             <form class="form-inline ">
               <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search">
-
-              {{-- options --}}
-              {{-- <div class="form-group input-group-sm">
-                <select name="searchCategory" id="searchCategory" class="form-control">
-                    <option selected value="">Category</option>
-                    @foreach ($category as $categories)
-                    <option>{{ $categories->CategoryName }}</option>
-                    @endforeach
-                </select>
-              </div> --}}
+              
               <button type="submit" class="btn btn-secondary  mx-2">
                 <i class="fas fa-search"></i> 
               </button>
@@ -153,7 +146,7 @@
                           @empty
                           <tr>
                             <td colspan="9" style="text-align: center">
-                              <h1>No datas!</h1>
+                              <h3>No data!</h3>
                             </td>
                           </tr>
                         @endforelse

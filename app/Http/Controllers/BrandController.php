@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class CategoryController extends Controller
+class BrandController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,32 +25,32 @@ class CategoryController extends Controller
     public function index()
     {
         // ienumerable
-        $categories = DB::table('categories')->get();
+        $brands = DB::table('brands')->get();
 
-        $tableCategories = Category::all();
+        $tableBrands = Brand::all();
 
-        if ($tableCategories->isEmpty()) {
-            $categories = DB::table('categories')->paginate();
+        if ($tableBrands->isEmpty()) {
+            $brands = DB::table('brands')->paginate();
         } else {
             // ienumerable
-            $categories = DB::table('categories');
+            $brands = DB::table('brands');
 
             // search validation
-            $search = Category::where('category_id', 'like', '%' . request()->search . '%')
-                ->OrWhere('category_name', 'like', '%' . request()->search . '%')
+            $search = Brand::where('brand_id', 'like', '%' . request()->search . '%')
+                ->OrWhere('brand_name', 'like', '%' . request()->search . '%')
                 ->first();
 
 
             if ($search === null) {
-                return redirect('categories')->with('danger', 'Invalid Search');
+                return redirect('brands')->with('danger', 'Invalid Search');
             } else {
-                $categories = $categories->where('category_id', 'like', '%' . request()->search . '%')
-                    ->OrWhere('category_name', 'like', '%' . request()->search . '%')
+                $brands = $brands->where('brand_id', 'like', '%' . request()->search . '%')
+                    ->OrWhere('brand_name', 'like', '%' . request()->search . '%')
                     ->latest()
                     ->paginate(10);
             }
         }
-        return view('categories', ['categories' => $categories]);
+        return view('brands', ['brands' => $brands]);
     }
 
     /**
@@ -74,43 +73,43 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'inputID' => 'required|max:255',
-            'inputCategoryName' => 'required'
+            'inputBrandName' => 'required'
         ]);
 
         $data = new \DateTime();
         try {
-            DB::table('categories')->insert(
+            DB::table('brands')->insert(
                 [
-                    'category_id' => $request->input('inputID'),
-                    'category_name' => $request->input('inputCategoryName'),
+                    'brand_id' => $request->input('inputID'),
+                    'brand_name' => $request->input('inputBrandName'),
                     'status' => $request->input('inputStatus'),
                     'created_at' => $data
                 ]
             );
-            return redirect('categories')->with('success', 'Sucessfully added!');
+            return redirect('brands')->with('success', 'Sucessfully added!');
         } catch (\Illuminate\Database\QueryException $ex) {
-            return redirect('categories')->with('danger', 'Invalid');
+            return redirect('brands')->with('danger', 'Invalid');
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category, $CategoryID)
+    public function show(Brand $brand)
     {
-        // for category view product
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Brand $brand)
     {
         //
     }
@@ -119,33 +118,33 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Brand $brand)
     {
         $data = new \DateTime();
-        DB::table('categories')
-            ->where('category_id', $request->input('editID'))
+        DB::table('brands')
+            ->where('brand_id', $request->input('editID'))
             ->update(
                 [
-                    'category_name' => $request->input('editCategoryName'),
+                    'brand_name' => $request->input('editBrandName'),
                     'status' => $request->input('editStatus'),
                     'updated_at' => $data
                 ]
             );
-        return redirect('categories')->with('success', ' ' . $request->input('editID') . ' Sucessfully edited!');
+        return redirect('brands')->with('success', ' ' . $request->input('editID') . ' Sucessfully edited!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy($category_id)
+    public function destroy($brand_id)
     {
-        Category::destroy($category_id);
-        return redirect('categories')->with('success', 'Sucessfully Deleted!');
+        Brand::destroy($brand_id);
+        return redirect('brands')->with('success', 'Sucessfully Deleted!');
     }
 }

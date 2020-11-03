@@ -14,7 +14,7 @@ class CreateUserDescriptionsTable extends Migration
     public function up()
     {
         Schema::create('user_descriptions', function (Blueprint $table) {
-            $table->string('user_description_id', 50)->primary();
+            $table->id('user_description_id');
             $table->foreignId('user_id');
             $table->string('firstname', 100)->nullable();
             $table->string('lastname', 100)->nullable();

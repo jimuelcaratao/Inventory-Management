@@ -14,7 +14,7 @@ class CreateUserPhotosTable extends Migration
     public function up()
     {
         Schema::create('user_photos', function (Blueprint $table) {
-            $table->string('user_photo_id', 50)->primary();
+            $table->id('user_photo_id');
             $table->foreignId('user_id');
             $table->binary('photo');
             $table->timestamps();

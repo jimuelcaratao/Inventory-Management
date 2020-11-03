@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use HasFactory;
+
     protected $table = 'products';
     protected $primaryKey = 'barcode';
 
@@ -18,5 +20,8 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    use HasFactory;
+    public function brands()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 }

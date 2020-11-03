@@ -88,7 +88,6 @@ $(document).ready(function() {
           var brand =el.data("item-brand");
           var stock =el.data("item-stock");
           var price =el.data("item-price");
-          // bakla ako
 
         // var description = row.children("item-email").text();
 
