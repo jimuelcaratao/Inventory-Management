@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 
 class SupplierController extends Controller
@@ -25,6 +26,15 @@ class SupplierController extends Controller
      */
     public function index()
     {
+
+        // User Descriptions
+        $users = DB::table('users')
+            ->join('user_descriptions', 'users.id', '=', 'user_descriptions.user_id')
+            ->join('user_photos', 'users.id', '=', 'user_photos.user_id')
+            // ->select('users.*', 'user_descriptions.*', 'user_photos.*')
+            ->Where('id', 'LIKE', '%' . Auth::user()->id .  '%')
+            ->first();
+
         $supplierCollection = Supplier::all();
 
         if ($supplierCollection->isEmpty()) {
@@ -47,7 +57,7 @@ class SupplierController extends Controller
                     ->paginate(10);
             }
         }
-        return view('suppliers', ['suppliers' => $suppliers]);
+        return view('suppliers', ['users' => $users, 'suppliers' => $suppliers]);
     }
 
     /**

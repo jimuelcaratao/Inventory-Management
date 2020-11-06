@@ -16,7 +16,7 @@ class CreateSupplierPhotosTable extends Migration
         Schema::create('supplier_photos', function (Blueprint $table) {
             $table->id('supplier_photo_id');
             $table->string('supplier_id');
-            $table->binary('photo');
+            $table->string('photo', 100)->nullable();
             $table->timestamps();
 
             $table->foreign('supplier_id')->references('supplier_id')->on('suppliers');

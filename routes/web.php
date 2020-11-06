@@ -7,8 +7,10 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserDescriptionController;
+use App\Models\ProductPhoto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -64,7 +66,6 @@ Route::get('/suppliers', [App\Http\Controllers\SupplierController::class, 'index
 Route::get('/invoices', [App\Http\Controllers\InvoiceController::class, 'index'])->name('invoices')->middleware('is_admin');
 
 Route::get('/analytics', [App\Http\Controllers\AnalyticController::class, 'index'])->name('analytics')->middleware('is_admin');
-
 
 
 // Resources

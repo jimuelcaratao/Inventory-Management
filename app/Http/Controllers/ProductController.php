@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductPhoto;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View as ViewView;
 use PhpParser\NodeVisitor\FirstFindingVisitor;
 use Products;
@@ -30,6 +32,13 @@ class ProductController extends Controller
      */
     public function index()
     {
+        // User Descriptions
+        $users = DB::table('users')
+            ->join('user_descriptions', 'users.id', '=', 'user_descriptions.user_id')
+            ->join('user_photos', 'users.id', '=', 'user_photos.user_id')
+            // ->select('users.*', 'user_descriptions.*', 'user_photos.*')
+            ->Where('id', 'LIKE', '%' . Auth::user()->id .  '%')
+            ->first();
 
         // stored in memory
         $categories = Category::where('status', 'available')
@@ -40,7 +49,12 @@ class ProductController extends Controller
             ->orderBy('brand_name')
             ->get();
 
+        // $productPhotos = ProductPhoto::where('barcode', '1111z')
+        //     ->get();
+
         $tableProducts = Product::all();
+
+        // var_dump($productPhotos);
 
         if ($tableProducts->isEmpty()) {
             $products = DB::table('products')->paginate();
@@ -76,8 +90,7 @@ class ProductController extends Controller
             }
         }
 
-
-        return view('products', ['products' => $products, 'categories' => $categories, 'brands' => $brands]);
+        return view('products', ['users' => $users, 'products' => $products, 'categories' => $categories, 'brands' => $brands]);
     }
 
     /**
@@ -98,7 +111,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $barcode)
     {
         $this->validate($request, [
             'inputSKU' => 'required|max:255',
@@ -106,6 +119,7 @@ class ProductController extends Controller
         ]);
         // return redirect('product')->with('succes','Data saved');
         $data = new \DateTime();
+        /*Insert your data*/
         try {
             DB::table('products')->insert(
                 [
@@ -119,7 +133,25 @@ class ProductController extends Controller
                     'price' => $request->input('inputPrice'),
                     'created_at' => $data
                 ]
+
             );
+
+
+            // $images = array();
+            // if ($files = $request->file('images')) {
+            //     foreach ($files as $file) {
+            //         $name = $file->getClientOriginalName();
+            //         $file->move('image', $name);
+            //         $images[] = $name;
+            //     }
+            // }
+            // ProductPhoto::insert([
+            //     'barcode' => $request->input('inputBarcode'),
+            //     'photo' =>  implode("|", $images),
+            //     //you can put other insertion here
+            // ]);
+
+
             return redirect('products')->with('success', 'Sucessfully added!');
             // Closures include ->first(), ->get(), ->pluck(), etc.
         } catch (\Illuminate\Database\QueryException $ex) {

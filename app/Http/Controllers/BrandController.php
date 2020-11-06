@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class BrandController extends Controller
 {
@@ -24,6 +25,15 @@ class BrandController extends Controller
      */
     public function index()
     {
+
+        // User Descriptions
+        $users = DB::table('users')
+            ->join('user_descriptions', 'users.id', '=', 'user_descriptions.user_id')
+            ->join('user_photos', 'users.id', '=', 'user_photos.user_id')
+            // ->select('users.*', 'user_descriptions.*', 'user_photos.*')
+            ->Where('id', 'LIKE', '%' . Auth::user()->id .  '%')
+            ->first();
+
         // ienumerable
         $brands = DB::table('brands')->get();
 
@@ -50,7 +60,7 @@ class BrandController extends Controller
                     ->paginate(10);
             }
         }
-        return view('brands', ['brands' => $brands]);
+        return view('brands', ['users' => $users, 'brands' => $brands]);
     }
 
     /**

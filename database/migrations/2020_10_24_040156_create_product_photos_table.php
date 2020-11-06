@@ -16,7 +16,7 @@ class CreateProductPhotosTable extends Migration
         Schema::create('product_photos', function (Blueprint $table) {
             $table->id('product_photo_id');
             $table->string('barcode', 20);
-            $table->binary('photo');
+            $table->string('photo', 100)->nullable();
             $table->timestamps();
 
             $table->foreign('barcode')->references('barcode')->on('products');

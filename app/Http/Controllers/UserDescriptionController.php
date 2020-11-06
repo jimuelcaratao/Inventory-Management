@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserDescription;
+use App\Models\UserPhoto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-
 
 class UserDescriptionController extends Controller
 {
@@ -19,6 +21,8 @@ class UserDescriptionController extends Controller
     {
         $this->middleware('auth');
     }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -29,11 +33,15 @@ class UserDescriptionController extends Controller
 
         $users = DB::table('users')
             ->join('user_descriptions', 'users.id', '=', 'user_descriptions.user_id')
-            ->Where('user_id', 'LIKE', '%' . Auth::user()->id .  '%')
-            // ->select('users.*', 'user_descriptions.*')
+            ->join('user_photos', 'users.id', '=', 'user_photos.user_id')
+            // ->select('users.*', 'user_descriptions.*', 'user_photos.*')
+            ->Where('id', 'LIKE', '%' . Auth::user()->id .  '%')
             ->first();
 
-        return view('user_descriptions', ['users' => $users]);
+        $directory =  storage_path('app/public/avatars');
+        $files = Storage::allFiles($directory);
+
+        return view('user_descriptions', ['users' => $users, 'files' => $files]);
     }
 
     /**
@@ -73,6 +81,43 @@ class UserDescriptionController extends Controller
             'contact' =>  $request->input('inputContact'),
             'address' =>  $request->input('inputAddress'),
         ]);
+
+
+        if ($request->hasFile('avatar') != null) {
+            $sad = $request->file('avatar')->getClientOriginalName();
+            $char = strval($sad);
+
+            $user_photo = UserPhoto::updateOrCreate([
+                'user_id'   => Auth::user()->id,
+            ], [
+                'photo' =>   $char,
+            ]);
+        } else {
+            return redirect('user_descriptions');
+        }
+
+
+        // $path = $request->file('avatar')->store(
+        //     'avatars/' .  Auth::user()->id,
+        //     'public'
+        // );
+
+
+        // $path = $request->file('avatar')->storePublicly('avatars', 'public');
+
+        $name = $request->file('avatar')->getClientOriginalName();
+
+        $path = $request->file('avatar')->storePubliclyAs(
+            'avatars/' .  Auth::user()->id,
+            $name,
+            'public'
+        );
+
+
+        // $md5Name = md5_file($request->file('avatar')->getRealPath());
+        // $guessExtension = $request->file('avatar')->guessExtension();
+        // $file = $request->file('avatar')->storeAs('avatars', $md5Name . '.' . $guessExtension, 'public');
+
         return redirect('user_descriptions')->with('success', 'Sucessfully Edited!');
     }
 

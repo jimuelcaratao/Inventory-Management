@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\UserDescription;
+use App\Models\UserPhoto;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -85,6 +86,11 @@ class RegisterController extends Controller
 
         $user_des = UserDescription::create([
             'user_description_id' => $user->id,
+            'user_id' => $user->id,
+        ]);
+
+        $user_photo = UserPhoto::create([
+            'user_photo_id' => $user->id,
             'user_id' => $user->id,
         ]);
         return $user;

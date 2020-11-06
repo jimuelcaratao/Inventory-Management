@@ -64,7 +64,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="col pb-1">
                         <div class="card" style="width: 10.5rem;">
                             <div class="card-body">
@@ -106,7 +105,7 @@
                         </div>
                     </div>
                 </div>
-
+                
             </div>
             {{-- end of content container --}}
         </div>

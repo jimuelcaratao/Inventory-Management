@@ -52,7 +52,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right navbar-uppercase">
                     <li>
-                        <a href="{{ URL::route('login') }}">LOGIN</a>
+                        <a href="{{ URL::route('login') }}">LOG-IN</a>
                     </li>
                 </ul>
             </div>

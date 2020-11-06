@@ -20,6 +20,5 @@ class UserDescription extends Model
         'middlename',
         'contact',
         'address',
-
     ];
 }

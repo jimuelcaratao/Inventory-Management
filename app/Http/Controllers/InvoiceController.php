@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
 {
@@ -24,6 +25,14 @@ class InvoiceController extends Controller
      */
     public function index()
     {
+        // User Descriptions
+        $users = DB::table('users')
+            ->join('user_descriptions', 'users.id', '=', 'user_descriptions.user_id')
+            ->join('user_photos', 'users.id', '=', 'user_photos.user_id')
+            // ->select('users.*', 'user_descriptions.*', 'user_photos.*')
+            ->Where('id', 'LIKE', '%' . Auth::user()->id .  '%')
+            ->first();
+
         // ienumerable
         $invoices = DB::table('orders')->get();
 
@@ -50,7 +59,7 @@ class InvoiceController extends Controller
                     ->paginate(10);
             }
         }
-        return view('invoices', ['invoices' => $invoices]);
+        return view('invoices', ['users' => $users, 'invoices' => $invoices]);
     }
 
     /**

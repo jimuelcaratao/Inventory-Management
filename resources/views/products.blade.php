@@ -85,6 +85,12 @@
         </div>
         <div class="row">
           <div class="col">
+            {{-- @foreach ($productPhotos as $productPhoto) 
+            <img src="data:image/png;base64,{{ chunk_split(base64_encode($productPhoto->photo)) }}" >
+            @endforeach --}}
+
+
+            {{-- <img src="data:image/png;base64,{{ chunk_split(base64_encode($productPhoto->photo)) }}" height="100" width="100"> --}}
               {{-- tables --}}
                 <div class="table-container" id="table-container">
                   <table class="table">
@@ -231,10 +237,6 @@
   </div>
 <!-- /search Modal -->
 
-   
-
-   
-
       <!-- Add Modal -->
       <div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="add-modal-label" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
@@ -245,13 +247,17 @@
               </button>
             </div>
             <div class="modal-body" id="attachment-body-content">
-            <form id="add-form" class="form-horizontal" action="{{ route('products.store') }}" method="POST">
+            <form id="add-form" class="form-horizontal" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card text-black bg-light mb-0">
                   <div class="card-header">
                     <h2 class="m-0">ADD</h2>
                   </div>
                   <div class="card-body">
+
+
+                    <input required type="file" class="form-control" name="images" placeholder="address" multiple>
+
 
                     <!-- Barcode -->
                     <div class="form-group input-group-sm">

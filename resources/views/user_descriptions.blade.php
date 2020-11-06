@@ -42,11 +42,17 @@
 
                 <div class="row py-4">
                     <div class="card w-100">
-                        <form  action="{{ route('user_descriptions.store') }}" method="POST">
+                        <form  action="{{ route('user_descriptions.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body  p-5">
 
                                 <input type="hidden" class="form-control" name="userID" value="{{ Auth::user()->id }}" readonly>
+                                
+                                <img src="{{  asset('storage/avatars/'. Auth::user()->id .'/' . $users->photo ) }}" alt="avatars" width="80"/>
+                                {{-- <img src="{{  asset('storage/avatars/'. Auth::user()->id .'/LeNfVGuZMp3iAo0RhpFT3EUTpUKq7w5JoMcEdSVe.png') }}" alt="avatars" width="80"/> --}}
+
+                                <input type="file" class="form-control" name="avatar" accept=".jpg,.gif,.png" multiple>
+
                                 {{-- First name --}}
                                 <div class="form-group row">
                                     <label for="staticEmail" class="col-sm-2 col-form-label">First Name</label>
