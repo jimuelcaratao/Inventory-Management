@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 class UserDescriptionController extends Controller
 {
@@ -97,6 +99,7 @@ class UserDescriptionController extends Controller
         }
 
 
+
         // $path = $request->file('avatar')->store(
         //     'avatars/' .  Auth::user()->id,
         //     'public'
@@ -105,14 +108,25 @@ class UserDescriptionController extends Controller
 
         // $path = $request->file('avatar')->storePublicly('avatars', 'public');
 
-        $name = $request->file('avatar')->getClientOriginalName();
+        // $name = $request->file('avatar')->getClientOriginalName();
 
-        $path = $request->file('avatar')->storePubliclyAs(
-            'avatars/' .  Auth::user()->id,
-            $name,
-            'public'
-        );
+        // $path = $request->file('avatar')->storePubliclyAs(
+        //     'avatars/' .  Auth::user()->id,
+        //     $name,
+        //     'public'
+        // );
 
+        if ($request->hasFile('avatar')) {
+
+            $image       = $request->file('avatar');
+            $filename    = $image->getClientOriginalName();
+
+            $image_resize = Image::make($image);
+            $image_resize->resize(300, 300);
+
+            $image_resize->save(public_path('avatars/'
+                .  Auth::user()->id . '_' . $filename));
+        }
 
         // $md5Name = md5_file($request->file('avatar')->getRealPath());
         // $guessExtension = $request->file('avatar')->guessExtension();
