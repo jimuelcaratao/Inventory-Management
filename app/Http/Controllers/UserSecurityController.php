@@ -7,15 +7,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 
 class UserSecurityController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $users = DB::table('users')
@@ -36,9 +49,17 @@ class UserSecurityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'bail|required|unique:users|max:255|email',
+        ]);
+        $email = DB::table('users')
+            ->where('id', Auth::user()->id)
+            ->update([
+                'email' => $request->input('email')
+            ]);
+        return redirect('user_security');
     }
 
     /**
@@ -49,7 +70,19 @@ class UserSecurityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'password' => 'bail|required|min:8|confirmed',
+        ]);
+
+
+        $pass = DB::table('users')
+            ->where('id', Auth::user()->id)
+            ->update([
+                'password' => Hash::make($request->input('password')),
+
+            ]);
+
+        return redirect('user_security');
     }
 
     /**

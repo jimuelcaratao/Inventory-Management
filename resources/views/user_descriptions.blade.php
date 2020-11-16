@@ -64,7 +64,18 @@
                         {{-- avatar display --}}
                         <img class="border mx-auto d-block" src="{{  asset('avatars/'.  Auth::user()->id . '_' . $users->photo ) }}" alt="{{ $users->photo }}" width="200"/>
                         <input class="py-3 mx-auto d-block" type="file"  name="avatar" accept=".jpg,.gif,.png">
-                        
+
+                        {{-- Nickname --}}
+                        <div class="form-group row small">
+                            <label for="inputNickname" class="col-sm-2 col-form-label small">Nickname</label>
+                            <div class="col-sm-8 input-group-sm">
+                                <input type="text" class="form-control" id="inputNickname" name="inputNickname" value="{{ $users->name }}" readonly>
+                            </div>
+                            <div class="edit-item">
+                                <i class="col-sm-2 far fa-edit fa-lg" id="editNickname" type="button"></i>
+                            </div>
+                        </div>
+                        {{-- /Nickname --}}
 
                         {{-- First name --}}
                         <div class="form-group row small">
@@ -146,6 +157,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="{{asset('js/layouts/jquery-3.5.1.min.js')}}"></script>
     <script>
+        document.getElementById('editNickname').onclick = function(e) {
+            document.getElementById('inputNickname').removeAttribute('readonly');
+            document.getElementById("inputNickname").focus();
+        };
         document.getElementById('editFirstname').onclick = function(e) {
             document.getElementById('inputFirstname').removeAttribute('readonly');
             document.getElementById("inputFirstname").focus();

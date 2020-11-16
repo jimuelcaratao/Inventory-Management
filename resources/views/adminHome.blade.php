@@ -62,7 +62,7 @@
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
                                 <h1 class="card-text">{{ $products_count }}</h1>
                                 <img src="{{asset('images/shopping-cart.png')}}" class="card-image">
-                                <a href="#" class="card-link">view more</a>
+                                <a href="{{ URL::to('products') }}" class="card-link">view more</a>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
                                 <h1 class="card-text">{{ $orders_count }}</h1>
                                 <img src="{{asset('images/order.png')}}" class="card-image">
-                                <a href="#" class="card-link">view more</a>
+                                <a href="{{ URL::to('invoices') }}" class="card-link">view more</a>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                                 <h5 class="card-title">Low in Stock Items</h5>
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
                                 <h1 class="card-text">{{ $products_count_low }}</h1>
-                                <a href="#" class="card-link">view more</a>
+                                <a href="{{ URL::to('products') }}" class="card-link">view more</a>
                             </div>
                         </div>
                     </div>

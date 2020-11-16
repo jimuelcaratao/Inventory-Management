@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\UserDescription;
 use App\Models\UserPhoto;
 use Illuminate\Http\Request;
@@ -71,6 +72,16 @@ class UserDescriptionController extends Controller
 
         //     ]
         // );
+        $data = new \DateTime();
+        $user_des = User::updateOrCreate([
+            //Add unique field combo to match here
+            //For example, perhaps you only want one entry per user:
+            'id'   => Auth::user()->id,
+        ], [
+            'name' =>  $request->input('inputNickname'),
+            'updated_at' => $data
+
+        ]);
 
         $user_des = UserDescription::updateOrCreate([
             //Add unique field combo to match here
@@ -82,6 +93,8 @@ class UserDescriptionController extends Controller
             'middlename' =>  $request->input('inputMiddlename'),
             'contact' =>  $request->input('inputContact'),
             'address' =>  $request->input('inputAddress'),
+            'updated_at' => $data
+
         ]);
 
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserDescriptionController;
+use App\Http\Controllers\UserSecurityController;
 use App\Http\Resources\ProductImages;
 use App\Models\Category;
 use App\Models\Product;
@@ -14,6 +15,8 @@ use App\Models\ProductPhoto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Password;
+
 
 
 /*
@@ -46,6 +49,8 @@ Route::resource('/brands', BrandController::class);
 Route::resource('/suppliers', SupplierController::class);
 
 Route::resource('/invoices', InvoiceController::class);
+
+Route::resource('/user_security', UserSecurityController::class);
 
 
 

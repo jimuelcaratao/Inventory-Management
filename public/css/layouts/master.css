@@ -1,6 +1,6 @@
 /* Global */
 :root {
-    --bg-color: #283655;
+    --bg-color: #384b75;
 }
 * {
     margin: 0;
@@ -87,7 +87,7 @@ body {
     color: #fcfcfc !important;
 }
 .navbar-link-active {
-    color: #1d68a7 !important;
+    color: #fcfcfc !important;
 }
 
 /* for hamburger navbar */
