@@ -29,8 +29,12 @@
         <nav class="navbar navbar-expand navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{-- {{ config('app.name', 'Laravel') }} --}}
+                    @guest
+                        <img src="{{  asset('images/fb-dp-HJM.png' ) }}" alt="avatars" width="25"/>
+                        {{ __('HJM') }} 
+                    @endguest
                 </a>
+      
                 {{-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button> --}}
@@ -45,6 +49,7 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
+                       
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>

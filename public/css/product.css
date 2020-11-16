@@ -1,0 +1,14 @@
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(100%);
+}
+/* .carousel-indicators li {
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    background-color: #0000ff;
+    box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+.carousel-indicators .active {
+    background-color: #ffff99;
+} */

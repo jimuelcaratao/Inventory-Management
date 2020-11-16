@@ -5,13 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductPhoto;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View as ViewView;
-use PhpParser\NodeVisitor\FirstFindingVisitor;
-use Products;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class ProductController extends Controller
 {
@@ -30,7 +27,16 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function getDisplay()
+    {   // stored in memory
+        $categories = Category::where('status', 'available')
+            ->orderBy('category_name')
+            ->get();
+        return json_encode($categories);
+    }
+
+    public function index(Request $request)
     {
         // User Descriptions
         $users = DB::table('users')
@@ -44,20 +50,28 @@ class ProductController extends Controller
         $categories = Category::where('status', 'available')
             ->orderBy('category_name')
             ->get();
+
         $brands = DB::table('brands')
             ->where('status', 'available')
             ->orderBy('brand_name')
             ->get();
 
-        // $productPhotos = ProductPhoto::where('barcode', '1111z')
-        //     ->get();
+        // $sad =  session(['data' => $request->value]);
+        // $sadd = strval($sad);
+
+        // $hash = $request->hash;
+
+        // $productPhotos = DB::table('product_photos')
+        //     ->where('barcode', $sadd)
+        //     ->paginate(1);
+
 
         $tableProducts = Product::all();
 
         // var_dump($productPhotos);
 
         if ($tableProducts->isEmpty()) {
-            $products = DB::table('products')->paginate();
+            $products = DB::table('products');
         } else {
             // ienumerable
             $products = DB::table('products');
@@ -81,16 +95,16 @@ class ProductController extends Controller
                     ->Where('brand', 'LIKE', '%' . request()->searchBrand .  '%')
                     ->Where('category', 'LIKE', '%' . request()->searchCategory .  '%')
                     ->latest()
-                    ->paginate(10);
+                    ->paginate(10, ['*'], 'products');
             } else {
                 $products = $products->where('barcode', 'like', '%' . request()->search . '%')
                     ->OrWhere('product_name', 'like', '%' . request()->search . '%')
                     ->latest()
-                    ->paginate(10);
+                    ->paginate(10, ['*'], 'products');
             }
         }
 
-        return view('products', ['users' => $users, 'products' => $products, 'categories' => $categories, 'brands' => $brands]);
+        return view('products', ['users' => $users, 'products' => $products,  'categories' => $categories, 'brands' => $brands]);
     }
 
     /**
@@ -111,7 +125,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $barcode)
+    public function store(Request $request)
     {
         $this->validate($request, [
             'inputSKU' => 'required|max:255',
@@ -135,22 +149,6 @@ class ProductController extends Controller
                 ]
 
             );
-
-
-            // $images = array();
-            // if ($files = $request->file('images')) {
-            //     foreach ($files as $file) {
-            //         $name = $file->getClientOriginalName();
-            //         $file->move('image', $name);
-            //         $images[] = $name;
-            //     }
-            // }
-            // ProductPhoto::insert([
-            //     'barcode' => $request->input('inputBarcode'),
-            //     'photo' =>  implode("|", $images),
-            //     //you can put other insertion here
-            // ]);
-
 
             return redirect('products')->with('success', 'Sucessfully added!');
             // Closures include ->first(), ->get(), ->pluck(), etc.
@@ -190,7 +188,7 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $SKU)
+    public function update(Request $request)
     {
         $data = new \DateTime();
         DB::table('products')
@@ -207,6 +205,43 @@ class ProductController extends Controller
                     'updated_at' => $data
                 ]
             );
+
+
+
+
+        if ($request->hasFile('product_pic') != null) {
+
+            // create images
+            $image       = $request->file('product_pic');
+            $filename    = $image->getClientOriginalName();
+            $barcodeReq =  $request->input('editBarcode');
+
+            $image_resize = Image::make($image);
+            $image_resize->resize(300, 300);
+
+            $image_resize->save(public_path('product_images/'
+                .  $barcodeReq . '_' . $filename));
+
+            // create barcode 
+            $char = strval($filename);
+            ProductPhoto::create([
+                'barcode' => $request->input('editBarcode'),
+                'photo' => $char,
+            ]);
+            return redirect('products');
+        } else {
+            return redirect('products');
+        }
+
+        // $path = $request->file('product_pic')->storePublicly('avatars', 'public');
+
+        // $name = $request->file('product_pic')->getClientOriginalName();
+
+        // $path = $request->file('product_pic')->storePubliclyAs(
+        //     'avatars/' .  Auth::user()->id,
+        //     $name,
+        //     'public'
+        // );
         return redirect('products')->with('success', ' ' . $request->input('editBarcode') . ' Sucessfully edited!');
     }
 

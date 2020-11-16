@@ -1,0 +1,10 @@
+.links a {
+    color: black;
+}
+.links a:hover {
+    color: black;
+    text-decoration: none;
+}
+.active-profile {
+    border-bottom: black 1px solid;
+}

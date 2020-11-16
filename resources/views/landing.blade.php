@@ -88,7 +88,7 @@
                 <div class="title-area">
                     <h2>Our Services</h2>
                     <div class="separator separator-danger">✻</div>
-                    <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure nesciunt temporibus voluptas soluta totam impedit?</p>
+                    <p class="description">HJM Computer Parts offers you a quality product that you deserve. We'll make sure you'll get every updates about this site.</p>
                 </div>
             </div>
             <div class="row">
@@ -98,7 +98,7 @@
                             <i class="pe-7s-graph1"></i>
                         </div>
                         <h3>Sales</h3>
-                        <p class="description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus, eum!</p>
+                        <p class="description">HJM Computer Parts will offer great finds and deals just for you. So what are you waiting for? Buy Now!</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -107,7 +107,7 @@
                             <i class="pe-7s-note2"></i>
                         </div>
                         <h3>Content</h3>
-                        <p class="description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, expedita?</p>
+                        <p class="description">HJM Computer Parts contains such as computer products. Like HDD, Mouse, Laptop and many more.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -116,7 +116,7 @@
                             <i class="pe-7s-music"></i>
                         </div>
                         <h3>Passion</h3>
-                        <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, doloribus?</p>
+                        <p class="description">Team HJM Computer Parts lets you know that we give every effort and time to make you satisfy to our website.</p>
                     </div>
                 </div>
             </div>

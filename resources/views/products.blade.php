@@ -57,7 +57,7 @@
         <div class="row py-4">
           <div class="col-8">
             {{-- search --}}
-            <form class="form-inline ">
+            <form class="form-inline " >
               <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search">
               
               <button type="submit" class="btn btn-secondary  mx-2">
@@ -90,6 +90,31 @@
             @endforeach --}}
 
 
+
+ <!-- Trigger the modal with a button -->
+ {{-- <button type="button" id="btnGetItem" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-item">Open Modal</button> --}}
+
+ <!-- modal example -->
+ <div id="modal-item" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+ 
+     <!-- Modal content-->
+     <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal">&times;</button>
+       </div>
+       <div class="modal-body">
+         <p id="title-sample">Loading</p>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       </div>
+     </div>
+ 
+   </div>
+ </div>
+
+
             {{-- <img src="data:image/png;base64,{{ chunk_split(base64_encode($productPhoto->photo)) }}" height="100" width="100"> --}}
               {{-- tables --}}
                 <div class="table-container" id="table-container">
@@ -107,55 +132,63 @@
                           <th colspan="2">Action</th>
                       </tr>
                     </thead>  
-                      @forelse ($products as $product)
-                      <tr class="data-row table-sm table-product">
-                          <td>{{$product->barcode}}</td>
-                          <td>{{$product->sku}}</td>
-                          <td>{{$product->product_name}}</td>
-                          <td>{{$product->description}}</td>
-                          <td>{{$product->category}}</td>
-                          <td>{{$product->brand}}</td>
-                          <td>{{$product->stock}}</td>
-                          <td>{{$product->price}}</td>
-                          <td>
-                            {{-- edit icon --}}
-                            <a
-                            class="float-left"
-                            data-target="edit-modal"
-                            data-toggle="modal"
-                            data-tooltip="tooltip"
-                            data-placement="top"
-                            title="Edit"
-                            data-community="{{ json_encode($product) }}"
-                            data-item-sku="{{ $product->sku }}"
-                            data-item-barcode="{{ $product->barcode }}"
-                            data-item-productname="{{ $product->product_name }}"
-                            data-item-description="{{ $product->description }}"
-                            data-item-category="{{ $product->category }}"
-                            data-item-brand="{{ $product->brand }}"
-                            data-item-stock="{{ $product->stock }}"
-                            data-item-price="{{ $product->price }}"
-                            id="edit-item"
-                            ><i class="far fa-edit icons"></i></a>
-  
-                            {{-- delete icon --}}
-                            <form method="POST" action="/products/{{$product->barcode}}" class="float-left">
-                              @csrf
-                              @method("DELETE")
-                              <div class="form-group form-icon">
-                                {{-- <input type="submit" class="btn btn-danger delete-user" value="Delete"> --}}
-                                <i class="fas fa-trash-alt delete-user icons" type="submit"  data-tooltip="tooltip" data-placement="top" title="Delete"></i>
-                            </div>
-                            </form>
-                          </td>
-                      </tr>
-                          @empty
+                        @forelse ($products as $product)
+                          <tr class="data-row table-sm table-product">
+                              <td>{{$product->barcode}}</td>
+                              <td>{{$product->sku}}</td>
+                              <td>{{$product->product_name}}</td>
+                              <td>{{$product->description}}</td>
+                              <td>{{$product->category}}</td>
+                              <td>{{$product->brand}}</td>
+                              <td>{{$product->stock}}</td>
+                              <td>{{$product->price}}</td>
+                              <td>
+                                {{-- edit icon --}}
+                          
+                                <a
+                                class="float-left"
+                                data-target="edit-modal"
+                                data-toggle="modal"
+                                data-tooltip="tooltip"
+                                data-placement="top"
+                                title="Edit"
+                                data-community="{{ json_encode($product) }}"
+                                data-item-sku="{{ $product->sku }}"
+                                data-item-barcode="{{ $product->barcode }}"
+                                data-item-productname="{{ $product->product_name }}"
+                                data-item-description="{{ $product->description }}"
+                                data-item-category="{{ $product->category }}"
+                                data-item-brand="{{ $product->brand }}"
+                                data-item-stock="{{ $product->stock }}"
+                                data-item-price="{{ $product->price }}"
+                                id="edit-item"
+                                {{-- onclick="document.getElementById('primaryButton').click()" --}}
+                                ><i class="far fa-edit icons"></i></a>
+      
+                                {{-- delete icon --}}
+                                <form method="POST" action="/products/{{$product->barcode}}" class="float-left">
+                                  @csrf
+                                  @method("DELETE")
+                                  <div class="form-group form-icon">
+                                    {{-- <input type="submit" class="btn btn-danger delete-user" value="Delete"> --}}
+                                    <i class="fas fa-trash-alt delete-user icons" type="submit"  data-tooltip="tooltip" data-placement="top" title="Delete"></i>
+                                  </div>
+                                </form>
+                              </td>
+                          </tr>
+                        @empty
                           <tr>
                             <td colspan="9" style="text-align: center">
                               <h3>No data!</h3>
                             </td>
                           </tr>
                         @endforelse
+                        {{-- <form class="form-inline" id="barcodeImg">
+                            <input type="text" name="barcodeImg" class="form-control " id="barcodeImg">
+                              <button type="button" id="primaryButton" class="btn btn-secondary  mx-2">
+                                <i class="fas fa-search"></i> 
+                              </button>
+                        </form> --}}
                   </table>
               </div>
               <!-- table -->
@@ -247,17 +280,13 @@
               </button>
             </div>
             <div class="modal-body" id="attachment-body-content">
-            <form id="add-form" class="form-horizontal" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="add-form" class="form-horizontal" action="{{ route('products.store') }}" method="POST">
                 @csrf
                 <div class="card text-black bg-light mb-0">
                   <div class="card-header">
                     <h2 class="m-0">ADD</h2>
                   </div>
                   <div class="card-body">
-
-
-                    <input required type="file" class="form-control" name="images" placeholder="address" multiple>
-
 
                     <!-- Barcode -->
                     <div class="form-group input-group-sm">
@@ -343,7 +372,7 @@
           </div>
           <div class="modal-body" id="attachment-body-content">
             @forelse ($products as $product)
-            <form id="edit-form_{{$product->barcode}}" class="form-horizontal" method="POST" action="/products/{{$product->barcode}}">
+            <form id="edit-form_{{$product->barcode}}" class="form-horizontal" method="POST" action="/products/{{$product->barcode}}" enctype="multipart/form-data">
             @empty
             @endforelse
               @csrf
@@ -353,6 +382,54 @@
                   <h2 class="m-0">Edit</h2>
                 </div>
                 <div class="card-body">
+
+                    {{-- Display images --}}
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                      <div class="carousel-inner" id="image-container">
+                        {{-- <div class="carousel-item active">
+                          <img src="{{  asset('product_images/1111cc_fb-dp-HJM.png') }}" class="rounded mx-auto d-block w-50" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="{{  asset('product_images/1111cc_hjm-mockup.jpg') }}" class="d-block w-50" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="{{  asset('product_images/1111cc_fb-dp-HJM.png') }}" class="d-block w-50" alt="...">
+                        </div> --}}
+                      </div>
+                      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </div>
+
+                    {{-- <div id="image-container">
+                      <h1>loading</h1>
+                    </div> --}}
+
+                    {{-- @forelse ($productPhotos as $productPhoto)
+                      <img  id="displays_ava" class="py-2 rounded mx-auto d-block" width="150"/>
+                      <img  id="displays" class="py-2 rounded mx-auto d-block" src="{{  asset('product_images/'.  $productPhoto->barcode . '_' . $productPhoto->photo ) }}" alt="{{ $productPhoto->photo }}" width="150"/>
+                    @empty
+                    @endforelse --}}
+
+                    {{-- pagination --}}
+                    {{-- <div class="pagination justify-content-center">
+                      <!-- $employee->links -->
+                      {{ $productPhotos->render("pagination::bootstrap-4") }}
+                    </div> --}}
+                  
+                    {{-- Images Input --}}
+                    <div class="form-group input-group-sm">
+                      <input type="file"id="product_pic" name="product_pic" class="form-control" accept=".jpg,.gif,.png,.jpeg">
+
+                      {{-- <input type="file" id="product_pic" name="product_pic"
+                      accept=".jpg, .jpeg, .png"> --}}
+                    </div> 
+
                     <!-- Barcode -->
                     <div class="form-group input-group-sm">
                       <label class="col-form-label" for="editBarcode">Barcode</label>
@@ -386,7 +463,6 @@
                                 <option>{{ $category->category_name }}</option>
                               @endforeach
                         </select>
-                       
                     </div>
                     <!-- /Category --> 
                     <!-- Brand --> 
@@ -426,6 +502,12 @@
     </div>
   <!-- /Edit Modal -->
 
+
+ {{-- sample  --}}
+
+
+
+
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="{{asset('js/layouts/jquery-3.5.1.min.js')}}"></script>
@@ -436,6 +518,19 @@
           $("#element").slideUp(500);
       });
 
+      function myFunction() {
+          $("form").on("submit", function (event) {
+              event.preventDefault();
+              $.ajax({
+                  url: "yoururl",
+                  type: "POST",
+                  data: yourData,
+                  success: function (result) {
+                      console.log(result)
+                  }
+              });
+          })
+      }
     </script>
 @endpush
 @endsection

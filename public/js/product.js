@@ -71,7 +71,11 @@ $(document).ready(function() {
           var options = {
             'backdrop': 'static'
           };
-          $('#edit-modal').modal(options)
+
+          $('#edit-modal').modal(options);
+          
+
+  
         })
 
         // on modal show
@@ -82,26 +86,89 @@ $(document).ready(function() {
           // get the data
           var sku = el.data('item-sku');
           var barcode =el.data("item-barcode");
+          var barcodeImg =el.data("item-barcode");
           var productname =el.data("item-productname");
           var description =el.data("item-description");
           var category =el.data("item-category");
           var brand =el.data("item-brand");
           var stock =el.data("item-stock");
           var price =el.data("item-price");
-
+          // var barcodeImg = { json_encode($barcode, JSON_HEX_TAG) };
+          
         // var description = row.children("item-email").text();
 
           // fill the data in the input fields
           $("#editSKU").val(sku);
           $("#editBarcode").val(barcode);
+          $("#barcodeImg").val(barcodeImg);
           $("#editProductName").val(productname);
           $("#editDescription").val(description);
           $("#editCategory").val(category);
           $("#editBrand").val(brand);
           $("#editStock").val(stock);
           $("#editPrice").val(price);
+
+          $.ajax({
+            type: "GET",
+            url: `/ProductImages?Id=${barcode}`,
+            success: function(response) {
+                console.log(response.data);
+
+                let htmls = '';
+                $("#image-container").html(null);
+                response.data.map(x => {
+                   let routeAsset = `http://127.0.0.1:8000/product_images/${x.barcode}_${x.photo}`;
+                   $("#image-container").append(`<img class='carousel-item py-2 mx-auto d-block w-50' src='${routeAsset}' alt='${x.photo}' />`);
+                });
+            }
         })
 
+        //   $(function(){
+        //     $('#edit-item').click(function() {
+
+              
+        //       var imgName = barcode+".png";
+        //       var sad = "http://127.0.0.1:8000/product_images/"+barcode+"_fb-dp-HJM.png"
+              
+        //       // var imgNames = "{{ asset('product_images/"+barcode+"'_'. $productPhoto->photo) }}"
+        //       $("#displays_ava").attr("src",imgNames);
+        //     });
+        //  });    
+               
+        //   $(function(){
+        //     $('#edit-item').click(function() {
+        //       $.ajax({
+        //         type: "POST",
+        //         url: '/products', // This is what I have updated
+        //         data: { id: barcode }
+        //       }).done(function( msg ) {
+        //           alert( msg );
+        //           console.log(msg)
+        //       });
+        //     });
+        //  });    
+
+          // var data = { value : barcode };
+          // $.ajax({
+          //   type: "POST",
+          //   url: "{{ route('products') }}",
+          //   data: data,
+          //   headers: {
+          //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          //   },
+          //   success: function() {
+          //     console.log("Value added " + value);
+          //   }
+          // });
+  
+          // $('.display').append(barcode);
+
+          // $('.display').append('<img src="{{ asset("product_images/"'+ barcode +'"_" ". $productPhoto->photo") }}" />');
+        })
+
+
+
+  
         // on modal hide
         $('#edit-modal').on('hide.bs.modal', function() {
           $('.edit-item-trigger-clicked').removeClass('edit-item-trigger-clicked')
@@ -122,3 +189,11 @@ $(document).ready(function() {
           $(e.target).closest('form').submit() // Post the surrounding form
       }
     });
+
+
+  $(document).on('click', "#btnGetItem", async () => {
+    let response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+    let result = await response.json();
+
+    $("#title-sample").html(result.title);
+  })

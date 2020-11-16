@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @push('css')
+    <link rel="stylesheet" href="{{ asset('css/user_descriptions.css') }}">
 @endpush
 
 @section('content')
@@ -20,106 +21,120 @@
 @endif
 {{-- end of alerts --}}
 
-{{-- back button --}}
-@if(auth()->user()->is_admin == 1)         
-    <a href="{{ route('admin.home') }}"><button class="btn btn-secondary">Back</button></a>  
-@else
-      <a href="{{ route('home') }}"><button class="btn btn-secondary">Back</button></a>      
-@endif
-
 
 <div class="container main-container">
-    <div class="row">
-        <div class="col-2 col-lg-1">
+    <div class="row my-4" >
+        <div class="col align-self-start">
+            <h3>Profile</h3>
 
         </div>
-        <div class="col-10 col-lg-11">
-
-            <div class="container custom-container pl-5">
-                <div class="row my-4" >
-                    <h3>Profile</h3>
+        <div class="col align-self-end">
+            {{-- back button --}}
+            @if(auth()->user()->is_admin == 1)         
+                <div class="float-right">
+                    <a href="{{ route('admin.home') }}"><button class="btn btn-secondary"><i class="fas fa-home"></i></button></a>  
                 </div>
-
-                <div class="row py-4">
-                    <div class="card w-100">
-                        <form  action="{{ route('user_descriptions.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="card-body  p-5">
-
-                                <input type="hidden" class="form-control" name="userID" value="{{ Auth::user()->id }}" readonly>
-                                
-                                {{-- <img src="{{  asset('storage/avatars/'. Auth::user()->id .'/' . $users->photo ) }}" alt="avatars" width="80"/> --}}
-                                <img src="{{  asset('avatars/'.  Auth::user()->id . '_' . $users->photo ) }}" alt="{{ $users->photo }}" width="80"/>
-                                {{-- <img src="{{  asset('storage/avatars/'. Auth::user()->id .'/LeNfVGuZMp3iAo0RhpFT3EUTpUKq7w5JoMcEdSVe.png') }}" alt="avatars" width="80"/> --}}
-
-                                <input type="file" class="form-control" name="avatar" accept=".jpg,.gif,.png" multiple>
-
-                                {{-- First name --}}
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">First Name</label>
-                                    <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputFirstname" name="inputFirstname" value="{{ $users->firstname }}" readonly>
-                                    </div>
-                                    <i class="col-sm-2 far fa-edit fa-lg" id="editFirstname" type="button"></i>
-                                </div>
-                                {{-- /First name --}}
-
-                                {{-- last name --}}
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">Last Name</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="inputLastname" name="inputLastname"  value="{{ $users->lastname }}"  readonly>
-                                    </div>
-                                    <i class="col-sm-2 far fa-edit fa-lg" id="editLastname" type="button"></i>
-                                </div>
-                                {{-- /last name --}}
-
-
-                                {{-- middle name --}}
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">Middle Name</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="inputMiddlename"  name="inputMiddlename"  value="{{ $users->middlename }}"  readonly>
-                                    </div>
-                                    <i class="col-sm-2 far fa-edit fa-lg" id="editMiddlename" type="button"></i>
-                                </div>
-                                {{-- /middle name --}}
-
-                                {{-- Contact  --}}
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">Contact Name</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="inputContact"  name="inputContact"  value="{{ $users->contact }}"  readonly>
-                                    </div>
-                                    <i class="col-sm-2 far fa-edit fa-lg" id="editContact" type="button"></i>
-                                </div>
-                                {{-- /Contact  --}}
-
-                                {{-- Address--}}
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">Address</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="inputAddress" name="inputAddress"  value="{{ $users->address }}" readonly>
-                                    </div>
-                                    <i class="col-sm-2 far fa-edit fa-lg" id="editAddress" type="button"></i>
-                                </div>
-                                {{-- /Address --}}
-
-                            </div>
-                            <div class="card-footer text-right">
-                                <input id="editForm" class="btn btn-primary" type="submit" value="Save" />
-                                <button class="btn btn-secondary" onClick="window.location.reload();">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
+            @else
+                <div class="float-right">
+                    <a href="{{ route('home') }}"><button class="btn btn-secondary"><i class="fas fa-home"></i></button></a>     
                 </div>
-                
-                <div class="row py-4">
-                
-                </div>
+            @endif
+        </div>
 
+
+    </div>
+    <div class="row">
+        <div class="col-3 col-lg-2 py-4">
+            <div class="links pb-3 ">
+                <a href="{{ URL::to('user_descriptions') }}" class="active-profile">Informations</a>
             </div>
-            {{-- end of content container --}}
+            <div class="links">
+                <a href="{{ URL::to('user_security') }}">Security</a>
+            </div>
+        </div>
+        <div class="col-9 col-lg-10">
+
+            <div class="card w-100">
+                <form  action="{{ route('user_descriptions.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="card-body  p-5">
+
+                        <input type="hidden" class="form-control" name="userID" value="{{ Auth::user()->id }}" readonly>
+                        
+                        {{-- avatar display --}}
+                        <img class="border mx-auto d-block" src="{{  asset('avatars/'.  Auth::user()->id . '_' . $users->photo ) }}" alt="{{ $users->photo }}" width="200"/>
+                        <input class="py-3 mx-auto d-block" type="file"  name="avatar" accept=".jpg,.gif,.png">
+                        
+
+                        {{-- First name --}}
+                        <div class="form-group row small">
+                            <label for="inputFirstname" class="col-sm-2 col-form-label small">Firstname</label>
+                            <div class="col-sm-8 input-group-sm">
+                                <input type="text" class="form-control" id="inputFirstname" name="inputFirstname" value="{{ $users->firstname }}" readonly>
+                            </div>
+                            <div class="edit-item">
+                                <i class="col-sm-2 far fa-edit fa-lg" id="editFirstname" type="button"></i>
+                            </div>
+                        </div>
+                        {{-- /First name --}}
+
+                        {{-- last name --}}
+                        <div class="form-group row small">
+                            <label for="inputLastname" class="col-sm-2 col-form-label">Lastname</label>
+                            <div class="col-sm-8 input-group-sm">
+                                <input type="text" class="form-control" id="inputLastname" name="inputLastname"  value="{{ $users->lastname }}"  readonly>
+                            </div>
+                            <div class="edit-item">
+                                <i class="col-sm-2 far fa-edit fa-lg" id="editLastname" type="button"></i>
+                            </div>
+                        </div>
+                        {{-- /last name --}}
+
+
+                        {{-- middle name --}}
+                        <div class="form-group row small">
+                            <label for="inputMiddlename" class="col-sm-2 col-form-label ">Middlename</label>
+                            <div class="col-sm-8 input-group-sm">
+                                <input type="text" class="form-control" id="inputMiddlename"  name="inputMiddlename"  value="{{ $users->middlename }}"  readonly>
+                            </div>
+                            <div class="edit-item">
+                                <i class="col-sm-2 far fa-edit fa-lg" id="editMiddlename" type="button"></i>
+                            </div>
+                        </div>
+                        {{-- /middle name --}}
+
+                        {{-- Contact  --}}
+                        <div class="form-group row small">
+                            <label for="inputContact" class="col-sm-2 col-form-label">Contact</label>
+                            <div class="col-sm-8 input-group-sm">
+                                <input type="text" class="form-control" id="inputContact"  name="inputContact"  value="{{ $users->contact }}"  readonly>
+                            </div>
+                            <div class="edit-item">
+                                <i class="col-sm-2 far fa-edit fa-lg" id="editContact" type="button"></i>
+                            </div>
+                        </div>
+                        {{-- /Contact  --}}
+
+                        {{-- Address--}}
+                        <div class="form-group row small">
+                            <label for="inputAddress" class="col-sm-2 col-form-label">Address</label>
+                            <div class="col-sm-8 input-group-sm">
+                                <input type="text" class="form-control" id="inputAddress" name="inputAddress"  value="{{ $users->address }}" readonly>
+                            </div>
+                            <div class="edit-item">
+                                <i class="col-sm-2 far fa-edit fa-lg" id="editAddress" type="button"></i>
+                            </div>
+                        </div>
+                        {{-- /Address --}}
+
+                    </div>
+                    <div class="card-footer text-right">
+                        <input id="editForm" class="btn btn-primary" type="submit" value="Save" />
+                        <button class="btn btn-secondary" onClick="window.location.reload();">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
     {{-- end of main container --}}

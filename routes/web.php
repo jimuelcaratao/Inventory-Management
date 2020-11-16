@@ -7,7 +7,11 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserDescriptionController;
+use App\Http\Resources\ProductImages;
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\ProductPhoto;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -49,9 +53,14 @@ Route::resource('/invoices', InvoiceController::class);
 Auth::routes();
 
 
+Route::get('/get_images', [App\Http\Controllers\ProductController::class, 'getDisplay'])->name('get_images');
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/user_descriptions', [App\Http\Controllers\UserDescriptionController::class, 'index'])->name('user_descriptions');
+
+Route::get('/user_security', [App\Http\Controllers\UserSecurityController::class, 'index'])->name('user_security');
 
 Route::get('/admin', [App\Http\Controllers\HomeAdminController::class, 'index'])->name('admin.home')->middleware('is_admin');
 
@@ -73,3 +82,11 @@ Route::get('/analytics', [App\Http\Controllers\AnalyticController::class, 'index
 //  Route::resource('product', CategoryController::class)->only([
 //     'index', 'show'
 // ]);
+
+
+Route::get('/ProductImages', function (Request $request) {
+    return new ProductImages(
+        ProductPhoto::where('barcode', $request->Id)
+            ->get()
+    );
+});

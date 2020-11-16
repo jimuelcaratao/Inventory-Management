@@ -13,4 +13,10 @@ class ProductPhoto extends Model
     protected $primaryKey = 'product_photo_id';
 
     public $timestamps = true;
+
+    protected $fillable = [
+        'product_photo_id',
+        'barcode',
+        'photo',
+    ];
 }
