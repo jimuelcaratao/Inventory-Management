@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @push('css')
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="{{asset('css/product.css')}}">
 @endpush
 
@@ -12,6 +13,7 @@
   <div class="left-navbar-links">
       <a href="{{ URL::to('admin') }}" ><i class="fas fa-columns icons icon_color"></i><span class="navbar-span">Home</span></a>
       <a href="{{ URL::to('products') }}" class="navbar-link-active"><i class="fas fa-box-open icons icon_color"></i><span class="navbar-span">Items</span></a>
+      <a href="{{ URL::to('orders') }}"><i class="far fa-list-alt icons"></i><span class="navbar-span icon_color">Orders</span></a>
       <a href="{{ URL::to('categories') }}"><i class="fas fa-clipboard icons icon_color"></i><span class="navbar-span">Category</span></a>
       <a href="{{ URL::to('brands') }}"><i class="fas fa-tags icons icon_color"></i><span class="navbar-span">Brand</span></a>
       <a href="{{ URL::to('suppliers') }}"><i class="fas fa-phone icons icon_color"></i><span class="navbar-span">Supplier</span></a>
@@ -90,7 +92,6 @@
             @endforeach --}}
 
 
-
  <!-- Trigger the modal with a button -->
  {{-- <button type="button" id="btnGetItem" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-item">Open Modal</button> --}}
 
@@ -118,12 +119,12 @@
             {{-- <img src="data:image/png;base64,{{ chunk_split(base64_encode($productPhoto->photo)) }}" height="100" width="100"> --}}
               {{-- tables --}}
                 <div class="table-container" id="table-container">
-                  <table class="table">
+                  <table id="dtHorizontalExample" class="table table-striped">
                     <thead>
                       <tr>
                           <th>Barcode</th>
                           <th>SKU</th>
-                          <th>Product Name</th>
+                          <th>ProductName</th>
                           <th>Description</th>
                           <th>Category</th>
                           <th>Brand</th>
@@ -382,11 +383,29 @@
                   <h2 class="m-0">Edit</h2>
                 </div>
                 <div class="card-body">
+                  {{-- Display images --}}
+                    <!-- Swiper -->
+                    <div class="swiper-container h-100">
 
-                    {{-- Display images --}}
-                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                      <div class="swiper-wrapper" id="image-container">
+                        {{-- <div class="swiper-slide">Slide 1</div>
+                        <div class="swiper-slide">Slide 2</div>
+                        <div class="swiper-slide">Slide 3</div>
+                        <div class="swiper-slide">Slide 4</div>
+                        <div class="swiper-slide">Slide 5</div>
+                        <div class="swiper-slide">Slide 6</div>
+                        <div class="swiper-slide">Slide 7</div>
+                        <div class="swiper-slide">Slide 8</div>
+                        <div class="swiper-slide">Slide 9</div>
+                        <div class="swiper-slide">Slide 10</div> --}}
+                      </div>
+                    </div>
+
+
+
+                    {{-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                       <div class="carousel-inner" id="image-container">
-                        {{-- <div class="carousel-item active">
+                        <div class="carousel-item active">
                           <img src="{{  asset('product_images/1111cc_fb-dp-HJM.png') }}" class="rounded mx-auto d-block w-50" alt="...">
                         </div>
                         <div class="carousel-item">
@@ -394,7 +413,7 @@
                         </div>
                         <div class="carousel-item">
                           <img src="{{  asset('product_images/1111cc_fb-dp-HJM.png') }}" class="d-block w-50" alt="...">
-                        </div> --}}
+                        </div>
                       </div>
                       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -404,27 +423,11 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                       </a>
-                    </div>
-
-                    {{-- <div id="image-container">
-                      <h1>loading</h1>
-                    </div> --}}
-
-                    {{-- @forelse ($productPhotos as $productPhoto)
-                      <img  id="displays_ava" class="py-2 rounded mx-auto d-block" width="150"/>
-                      <img  id="displays" class="py-2 rounded mx-auto d-block" src="{{  asset('product_images/'.  $productPhoto->barcode . '_' . $productPhoto->photo ) }}" alt="{{ $productPhoto->photo }}" width="150"/>
-                    @empty
-                    @endforelse --}}
-
-                    {{-- pagination --}}
-                    {{-- <div class="pagination justify-content-center">
-                      <!-- $employee->links -->
-                      {{ $productPhotos->render("pagination::bootstrap-4") }}
                     </div> --}}
                   
                     {{-- Images Input --}}
                     <div class="form-group input-group-sm">
-                      <input type="file"id="product_pic" name="product_pic" class="form-control" accept=".jpg,.gif,.png,.jpeg">
+                      <input type="file"id="product_pic" name="product_pic" accept=".jpg,.gif,.png,.jpeg">
 
                       {{-- <input type="file" id="product_pic" name="product_pic"
                       accept=".jpg, .jpeg, .png"> --}}
@@ -511,6 +514,7 @@
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="{{asset('js/layouts/jquery-3.5.1.min.js')}}"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="{{asset('js/product.js')}}"></script>
     <script>
       // alert to fade
@@ -518,19 +522,15 @@
           $("#element").slideUp(500);
       });
 
-      function myFunction() {
-          $("form").on("submit", function (event) {
-              event.preventDefault();
-              $.ajax({
-                  url: "yoururl",
-                  type: "POST",
-                  data: yourData,
-                  success: function (result) {
-                      console.log(result)
-                  }
-              });
-          })
-      }
+      var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 3,
+      spaceBetween: 30,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+
     </script>
 @endpush
 @endsection

@@ -62,7 +62,11 @@
                         <input type="hidden" class="form-control" name="userID" value="{{ Auth::user()->id }}" readonly>
                         
                         {{-- avatar display --}}
-                        <img class="border mx-auto d-block" src="{{  asset('avatars/'.  Auth::user()->id . '_' . $users->photo ) }}" alt="{{ $users->photo }}" width="200"/>
+                        @if($users->photo)
+                            <img class="border mx-auto d-block" src="{{  asset('avatars/'.  Auth::user()->id . '_' . $users->photo ) }}" alt="{{ $users->photo }}" width="200"/>
+                        @else
+                            <img class="border mx-auto d-block" src="{{  asset('images/user-homepage.png') }}" alt="user-homepage.png" width="200"/>
+                        @endif
                         <input class="py-3 mx-auto d-block" type="file"  name="avatar" accept=".jpg,.gif,.png">
 
                         {{-- Nickname --}}

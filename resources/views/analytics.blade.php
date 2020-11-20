@@ -11,6 +11,7 @@
     <div class="left-navbar-links">
         <a href="{{ URL::to('admin') }}" ><i class="fas fa-columns icons icon_color"></i><span class="navbar-span">Home</span></a>
         <a href="{{ URL::to('products') }}"><i class="fas fa-box-open icons"></i><span class="navbar-span icon_color">Items</span></a>
+        <a href="{{ URL::to('orders') }}"><i class="far fa-list-alt icons"></i><span class="navbar-span icon_color">Orders</span></a>
         <a href="{{ URL::to('categories') }}"><i class="fas fa-clipboard icons"></i><span class="navbar-span icon_color">Category</span></a>
         <a href="{{ URL::to('brands') }}" ><i class="fas fa-tags icons"></i><span class="navbar-span icon_color">Brand</span></a>
         <a href="{{ URL::to('suppliers') }}" ><i class="fas fa-phone icons"></i><span class="navbar-span icon_color">Supplier</span></a>
@@ -38,12 +39,28 @@
                 <div class="row my-4" >
                     <h3>Analytics</h3>
                 </div>
-
-                
+           
                 <div class="row py-4">
                     <div class="card w-100">
-                        <div class="card-header">
-                          Earnings
+                        <div class="card-header bg-white shadow-sm">
+                            <div class="header">
+                                <h3>Sales analysis</h3>
+                            </div>
+                          {{-- datepicker --}}
+                          <form action="/analytics" method="GET" id="datePicker" class="form-inline col align-self-end">
+                                <label for="sales_from ">from:</label>
+                                <div class="form-group input-group-sm w-25 ml-2">
+                                    <input class="form-control" type="date" id="sales_from" name="sales_from" required>
+                                </div>
+                                <label for="sales_to">to:</label>
+                                <div class="form-group input-group-sm w-25 ml-2">
+                                    <input class="form-control" type="date" id="sales_to" name="sales_to" required>
+                                </div>
+                                <button type="submit" class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-search"></i> 
+                                  </button>
+                            </form>
+
                         </div>
                         <div class="card-body">
                             <canvas id="myChart" width="400" height="150"></canvas>
@@ -51,55 +68,125 @@
                       </div>
                 </div>
 
+                <div class="row my-4" >
+                    <h3>Cards</h3>
+                </div>
+
 
                 <div class="row py-4">
-                    <div class="col pb-1">
-                        <div class="card card-user" style="width: 10.5rem;">
+                    {{-- New products --}}
+                    <div class="col-md-6 pb-1">
+                        <div class="card" >
+                            <div class="card-body">
+                              <h5 class="card-title">Products Added</h5>
+                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
+
+                              <form action="/analytics" method="GET" id="datePickerProducts" class="form-inline col align-self-end">
+                                    <label for="product_month ">Month:</label>
+                                    <div class="form-group input-group-sm  ml-2">
+                                        <input class="form-control" type="date" id="product_month" name="product_month" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-secondary btn-sm">
+                                        <i class="fas fa-search"></i> 
+                                    </button>
+                                </form>
+
+                              <h1 class="card-text pt-4">{{ $new_products }}</h1>
+                              <a href="#" class="card-link">view more</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- TBA --}}
+                    <div class="col-md-6 pb-1">
+                        <div class="card" >
                             <div class="card-body">
                               <h5 class="card-title">New Users</h5>
                               {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
-                              <h1 class="card-text">100</h1>
+
+                              <form action="/analytics" method="GET" id="datePickerProducts" class="form-inline col align-self-end">
+                                    <label for="user_month ">Month:</label>
+                                    <div class="form-group input-group-sm  ml-2">
+                                        <input class="form-control " type="date" id="user_month" name="user_month" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-secondary btn-sm">
+                                        <i class="fas fa-search"></i> 
+                                    </button>
+                                </form>
+
+                              <h1 class="card-text pt-4">{{ $new_users }}</h1>
+                              <a href="#" class="card-link">view more</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- cards --}}
+                <div class="row py-4">
+                    
+                    <div class="col-md-4 pb-1 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                              <h6 class="card-title">Total Orders</h6>
+                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
+                              <h1 class="card-text">{{ $orders_count }}</h1>
+                              <a href="#" class="card-link">view more</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 pb-1 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                              <h6 class="card-title">Deliverd Orders</h6>
+                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
+                              <h1 class="card-text">{{ $orders_delivered }}</h1>
                                 {{-- <img src="{{asset('images/user-homepage.png')}}" class="card-image"> --}}
                               <a href="#" class="card-link">view more</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col pb-1">
-                        <div class="card" style="width: 10.5rem;">
+
+                    <div class="col-md-4 pb-1 mb-4">
+                        <div class="card">
                             <div class="card-body">
-                              <h5 class="card-title">New Products</h5>
+                              <h6 class="card-title">Returned Orders</h6>
                               {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
-                              <h1 class="card-text">100</h1>
+                              <h1 class="card-text">{{ $orders_returned }}</h1>
+                                {{-- <img src="{{asset('images/user-homepage.png')}}" class="card-image"> --}}
                               <a href="#" class="card-link">view more</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col pb-1">
-                        <div class="card" style="width: 10.5rem;">
+
+                    <div class="col-md-4 pb-1 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                              <h6 class="card-title">Deliverd Orders</h6>
+                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
+                              <h1 class="card-text">{{ $orders_delivered }}</h1>
+                                {{-- <img src="{{asset('images/user-homepage.png')}}" class="card-image"> --}}
+                              <a href="#" class="card-link">view more</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 pb-1 mb-4">
+                        <div class="card">
                             <div class="card-body">
                               <h6 class="card-title">Canceled Orders</h6>
                               {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
-                              <h1 class="card-text">100</h1>
+                              <h1 class="card-text">{{ $orders_canceled }}</h1>
                               <a href="#" class="card-link">view more</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col pb-1">
-                        <div class="card" style="width: 10.5rem;">
+                  
+                    <div class="col-md-4 pb-1 mb-4">
+                        <div class="card">
                             <div class="card-body">
-                              <h5 class="card-title">Total Orders</h5>
+                              <h6 class="card-title">Best sellers</h6>
                               {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
-                              <h1 class="card-text">100</h1>
-                              <a href="#" class="card-link">view more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col pb-1">
-                        <div class="card" style="width: 10.5rem;">
-                            <div class="card-body">
-                              <h5 class="card-title">Best sellers</h5>
-                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
-                              <h1 class="card-text">100</h1>
+                              <h1 class="card-text">{{ $best_seller }}</h1>
                               <a href="#" class="card-link">view more</a>
                             </div>
                         </div>
@@ -117,28 +204,39 @@
 
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+
     <script>
-        
-var ctx = document.getElementById('myChart').getContext('2d');
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'line',
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
 
-    // The data for our dataset
-    data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [{
-            label: 'Sales',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45]
-        }]
-    },
+            // The data for our dataset
+            data: {
+                labels: [
+                    @foreach ($order_items as $order_item)
+                        '{{ $order_item->created_at }}', 
+                    @endforeach
+                ],
+                datasets: [{
+                    label: 'Sales',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [
+                        // 0, 10, 5, 2, 20, 30, 45
+                        @foreach ($order_items as $order_item)
+                            {{ $order_item->price }}, 
+                        @endforeach
+                    ]
+                }]
+            },
 
-    // Configuration options go here
-    options: {
-        
-    }
-});
+            // Configuration options go here
+            options: {
+                
+            }
+        });
+        // var dateControl = document.querySelector('input[type="date"]');
+        // dateControl.value = '2017-06-01';   
     </script>
 @endpush

@@ -11,6 +11,7 @@
     <div class="left-navbar-links">
         <a href="{{ URL::to('admin') }}" ><i class="fas fa-columns icons icon_color"></i><span class="navbar-span">Home</span></a>
         <a href="{{ URL::to('products') }}"><i class="fas fa-box-open icons"></i><span class="navbar-span icon_color">Items</span></a>
+        <a href="{{ URL::to('orders') }}"><i class="far fa-list-alt icons"></i><span class="navbar-span icon_color">Orders</span></a>
         <a href="{{ URL::to('categories') }}"><i class="fas fa-clipboard icons"></i><span class="navbar-span icon_color">Category</span></a>
         <a href="{{ URL::to('brands') }}"><i class="fas fa-tags icons"></i><span class="navbar-span icon_color">Brand</span></a>
         <a href="{{ URL::to('suppliers') }}" ><i class="fas fa-phone icons"></i><span class="navbar-span icon_color">Supplier</span></a>
@@ -100,7 +101,7 @@
                                       data-toggle="modal"
                                       data-tooltip="tooltip"
                                       data-placement="top"
-                                      title="Edit"
+                                      title="View"
                                       data-community="{{ json_encode($invoice) }}"
                                       data-item-id="{{ $invoice->transaction_no }}"
                                       data-item-user="{{ $invoice->user_id }}"
@@ -108,17 +109,16 @@
                                       data-item-shipped="{{ $invoice->shipped_date }}"
                                       data-item-arrived="{{ $invoice->arriving_date }}"
                                       id="edit-item"
-                                      ><i class="far fa-edit icons"></i></a>
+                                      ><i class="fas fa-list icons"></i></a>
             
                                       {{-- delete icon --}}
-                                      <form method="POST" action="/invoices/{{$invoice->transaction_no}}" class="float-left">
+                                      {{-- <form method="POST" action="/invoices/{{$invoice->transaction_no}}" class="float-left">
                                         @csrf
                                         @method("DELETE")
                                         <div class="form-group form-icon">
-                                          {{-- <input type="submit" class="btn btn-danger delete-user" value="Delete"> --}}
                                           <i class="fas fa-trash-alt delete-user icons" type="submit"  data-tooltip="tooltip" data-placement="top" title="Delete"></i>
                                         </div>
-                                      </form>
+                                      </form> --}}
                                     </td>
                                 </tr>
                                     @empty
@@ -174,31 +174,31 @@
                   <!-- Transaction No -->
               <div class="form-group input-group-sm">
                   <label class="col-form-label" for="editTransactionNo">Transaction No</label>
-                  <input type="text" name="editTransactionNo" class="form-control " id="editTransactionNo" required >
+                  <input type="text" name="editTransactionNo" class="form-control " id="editTransactionNo" readonly >
               </div>
               <!-- /Transaction No -->
               <!-- User ID --> 
               <div class="form-group input-group-sm">
                   <label class="col-form-label" for="editUserID">User ID</label>
-                  <input type="text" name="editUserID" class="form-control " id="editUserID" required >
+                  <input type="text" name="editUserID" class="form-control " id="editUserID" readonly >
               </div>
               <!-- /User ID -->
               <!-- Status --> 
               <div class="form-group input-group-sm">
                 <label class="col-form-label" for="editStatus">Status</label>
-                <input type="text" name="editStatus" class="form-control " id="editStatus" required >
+                <input type="text" name="editStatus" class="form-control " id="editStatus" readonly >
               </div>
               <!-- /Status --> 
               <!-- Shipped Date --> 
               <div class="form-group input-group-sm">
                 <label class="col-form-label" for="editShippedDate">Shipped Date</label>
-                <input type="text" name="editShippedDate" class="form-control " id="editShippedDate" required >
+                <input type="text" name="editShippedDate" class="form-control " id="editShippedDate" readonly >
               </div>
               <!-- /Shipped Date --> 
               <!-- Arrived Date --> 
               <div class="form-group input-group-sm">
                 <label class="col-form-label" for="editArrivedDate">Arrived Date</label>
-                <input type="text" name="editArrivedDate" class="form-control " id="editArrivedDate" required >
+                <input type="text" name="editArrivedDate" class="form-control " id="editArrivedDate" readonly >
               </div>
               <!-- /Arrived Date --> 
           </div>

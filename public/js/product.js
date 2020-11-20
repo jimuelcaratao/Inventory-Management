@@ -118,7 +118,7 @@ $(document).ready(function() {
                 $("#image-container").html(null);
                 response.data.map(x => {
                    let routeAsset = `http://127.0.0.1:8000/product_images/${x.barcode}_${x.photo}`;
-                   $("#image-container").append(`<img class='carousel-item py-2 mx-auto d-block w-50' src='${routeAsset}' alt='${x.photo}' />`);
+                     $("#image-container").append(`<img class='swiper-slide my-4 mx-2 d-block w-50' src='${routeAsset}' alt='${x.photo}' />`);
                 });
             }
         })
@@ -197,3 +197,5 @@ $(document).ready(function() {
 
     $("#title-sample").html(result.title);
   })
+
+  

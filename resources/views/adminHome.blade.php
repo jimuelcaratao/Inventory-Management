@@ -12,6 +12,7 @@
     <div class="left-navbar-links">
         <a href="{{ URL::to('admin') }}" class="navbar-link-active"><i class="fas fa-columns icons"></i><span class="navbar-span">Home</span></a>
         <a href="{{ URL::to('products') }}"><i class="fas fa-box-open icons"></i><span class="navbar-span">Items</span></a>
+        <a href="{{ URL::to('orders') }}"><i class="far fa-list-alt icons"></i><span class="navbar-span icon_color">Orders</span></a>
         <a href="{{ URL::to('categories') }}"><i class="fas fa-clipboard icons"></i><span class="navbar-span">Category</span></a>
         <a href="{{ URL::to('brands') }}"><i class="fas fa-tags icons"></i><span class="navbar-span">Brand</span></a>
         <a href="{{ URL::to('suppliers') }}"><i class="fas fa-phone icons"></i><span class="navbar-span">Supplier</span></a>
@@ -69,9 +70,9 @@
                     <div class="col pb-1">
                         <div class="card" style="width: 15rem;">
                             <div class="card-body card_border">
-                                <h5 class="card-title">Orders</h5>
+                                <h5 class="card-title">Orders Today</h5>
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
-                                <h1 class="card-text">{{ $orders_count }}</h1>
+                                <h1 class="card-text">{{ $orders_count_today }}</h1>
                                 <img src="{{asset('images/order.png')}}" class="card-image">
                                 <a href="{{ URL::to('invoices') }}" class="card-link">view more</a>
                             </div>

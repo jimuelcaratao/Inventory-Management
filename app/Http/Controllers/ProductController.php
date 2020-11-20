@@ -79,10 +79,12 @@ class ProductController extends Controller
             // search validation
             $search = Product::where('barcode', 'like', '%' . request()->search . '%')
                 ->OrWhere('product_name', 'like', '%' . request()->search . '%')
+                ->OrWhere('sku', 'like', '%' . request()->search . '%')
                 ->first();
 
             $searchAdvance = Product::where('barcode', 'like', '%' . request()->advanceSearch . '%')
                 ->OrWhere('product_name', 'like', '%' . request()->advanceSearch . '%')
+                ->OrWhere('sku', 'like', '%' . request()->advanceSearch . '%')
                 ->first();
 
             if ($search === null) {
@@ -92,6 +94,8 @@ class ProductController extends Controller
             }
             if (!empty(request()->advanceSearch)  ||  !empty(request()->searchBrand) || !empty(request()->searchCategory)) {
                 $products = $products->where('product_name', 'LIKE', '%' . request()->advanceSearch .  '%')
+                    ->where('barcode', 'like', '%' . request()->advanceSearch . '%')
+                    ->where('sku', 'like', '%' . request()->advanceSearch . '%')
                     ->Where('brand', 'LIKE', '%' . request()->searchBrand .  '%')
                     ->Where('category', 'LIKE', '%' . request()->searchCategory .  '%')
                     ->latest()
@@ -99,6 +103,7 @@ class ProductController extends Controller
             } else {
                 $products = $products->where('barcode', 'like', '%' . request()->search . '%')
                     ->OrWhere('product_name', 'like', '%' . request()->search . '%')
+                    ->OrWhere('sku', 'like', '%' . request()->search . '%')
                     ->latest()
                     ->paginate(10, ['*'], 'products');
             }

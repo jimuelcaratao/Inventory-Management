@@ -45,12 +45,16 @@ class LoginController extends Controller
     {
         $input = $request->all();
 
-        $this->validate($request, [
+        // $this->validate($request, [
+        //     'email' => 'required|email',
+        //     'password' => 'required',
+        // ]);
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
-        if (Auth::attempt(['email' => $input['email'], 'password' =>  $input['password']], $input['remember'] = true)) {
+        $remember =  $request->input('remember');
+        if (Auth::attempt(['email' => $input['email'], 'password' =>  $input['password']], $remember)) {
             if (auth()->user()->is_admin == 1) {
                 return redirect()->route('admin.home');
             } else {

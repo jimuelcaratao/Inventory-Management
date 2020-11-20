@@ -161,7 +161,7 @@ body {
 .table-container {
     border-collapse: collapse;
     border-radius: 10px;
-    overflow: hidden;
+    overflow-x: scroll;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -185,8 +185,9 @@ table th,
 table td {
     border-bottom: 1px #d3d3d3 solid;
 }
-.table-product td {
-    font-size: 12px;
+.table td {
+    font-size: 12px !important;
+    padding-left: 15px !important;
 }
 
 .form-icon {

@@ -51,7 +51,9 @@ class HomeAdminController extends Controller
             ->where('stock', '<=', 10)
             ->count();
 
-        $orders_count = DB::table('orders')->count();
+        $orders_count_today = DB::table('orders')
+            ->whereDate('created_at', Carbon::today())
+            ->count();
 
         $earned_month = DB::table('order_items')->sum('price');
 
@@ -86,7 +88,7 @@ class HomeAdminController extends Controller
             'order_items' => $order_items,
             'users_count' => $users_count,
             'products_count' => $products_count,
-            'orders_count' => $orders_count,
+            'orders_count_today' => $orders_count_today,
             'products_count_low' => $products_count_low,
             'earned_month' => $earned_month,
             'dayTerm' => $dayTerm,
