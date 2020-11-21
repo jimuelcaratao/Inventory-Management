@@ -17,6 +17,8 @@
         <a href="{{ URL::to('suppliers') }}" class="navbar-link-active"><i class="fas fa-phone icons"></i><span class="navbar-span icon_color">Supplier</span></a>
         <a href="{{ URL::to('invoices') }}"><i class="fas fa-file-invoice icons"></i><span class="navbar-span icon_color">Invoice</span></a>
         <a href="{{ URL::to('analytics') }}"><i class="fas fa-chart-bar icons"></i><span class="navbar-span icon_color">Analytics</span></a>
+        <a href="{{ URL::to('users') }}" ><i class="fas fa-users icons"></i><span class="navbar-span icon_color">Users</span></a>
+
     </div>
     <!-- for navbar hambuger -->
     <div class="hamburger" id="hamburger-nav">

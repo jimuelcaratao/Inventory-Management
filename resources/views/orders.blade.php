@@ -16,6 +16,8 @@
         <a href="{{ URL::to('suppliers') }}" ><i class="fas fa-phone icons"></i><span class="navbar-span icon_color">Supplier</span></a>
         <a href="{{ URL::to('invoices') }}" ><i class="fas fa-file-invoice icons"></i><span class="navbar-span icon_color">Invoice</span></a>
         <a href="{{ URL::to('analytics') }}" ><i class="fas fa-chart-bar icons"></i><span class="navbar-span icon_color">Analytics</span></a>
+        <a href="{{ URL::to('users') }}" ><i class="fas fa-users icons"></i><span class="navbar-span icon_color">Users</span></a>
+
     </div>
     <!-- for navbar hambuger -->
     <div class="hamburger" id="hamburger-nav">
@@ -49,9 +51,123 @@
         <div class="col-10 col-lg-11">
 
             <div class="container custom-container pl-5">
-                <div class="row my-4" >
-                    <h3>Orders Record</h3>
+
+              {{-- Orders --}}
+              <div class="row my-4" >
+                  <h3>Orders</h3>
+              </div>
+              <div class="row py-4">
+                  <div class="col-8">
+                      {{-- search order--}}
+                      <form class="form-inline ">
+                          <input class="form-control" type="search" name="searchOrder" placeholder="Search" aria-label="Search">
+                          
+                          <button type="submit" class="btn btn-secondary  mx-2">
+                              <i class="fas fa-search"></i> 
+                          </button>
+                      </form>
+                  </div>
+                  <div class="col-4">
+                      {{-- adding product button --}}
+                      {{-- <button type="submit" data-community="{{ json_encode($categories) }}" data-toggle="modal" data-target="add-modal" id="add-item" class="add-btn btn btn-primary float-right"><i class="fas fa-plus mr-1"></i>ADD CATEGORY</button> --}}
+                  </div>
+              </div>
+              <div class="row py-4">
+                <div class="col">
+                     {{-- tables --}}
+                     <div class="table-container" id="table-container">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                                <th>Transaction No.</th>
+                                <th>User ID</th>
+                                <th>Status</th>
+                                <th>Shipped date</th>
+                                <th>Arriving date</th>
+                                <th colspan="2">Action</th>
+                            </tr>
+                          </thead>  
+                            @forelse ($orders as $order)
+                                    <tr class="data-row table-sm table-product">
+                                        <td>{{$order->transaction_no}}</td>
+                                        <td>{{$order->user_id}}</td>
+                                        <td>{{$order->status}}</td>
+                                        <td>{{$order->shipped_date}}</td>
+                                        <td>{{$order->arriving_date}}</td>
+
+                                        <td>
+                                        {{-- edit icon --}}
+                                        <a
+                                        class="float-left"
+                                        data-target="edit-modal"
+                                        data-toggle="modal"
+                                        data-tooltip="tooltip"
+                                        data-placement="top"
+                                        title="View"
+                                        data-community="{{ json_encode($order) }}"
+                                        data-item-transact="{{ $order->transaction_no }}"
+                                        data-item-id="{{ $order->user_id }}"
+                                        data-item-status="{{ $order->status }}"
+                                        data-item-ship="{{ $order->shipped_date }}"
+                                        data-item-arrive="{{ $order->arriving_date }}"
+                                        id="edit-item"
+                                        ><i class="fas fa-list icons"></i></a>
+                
+                                        {{-- delete icon --}}
+                                        {{-- <form method="POST" action="/orders/{{$order->transaction_no}}" class="float-left">
+                                            @csrf
+                                            @method("DELETE")
+                                            <div class="form-group form-icon">
+                                            <i class="fas fa-trash-alt delete-user icons" type="submit"  data-tooltip="tooltip" data-placement="top" title="Delete"></i>
+                                            </div>
+                                        </form> --}}
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                    <td colspan="9" style="text-align: center">
+                                        <h3>No data!</h3>
+                                    </td>
+                                    </tr>
+                                @endforelse
+                        </table>
+                    </div>
                 </div>
+            </div>
+
+            {{-- migrate to invoice --}}
+            <div class="row justify-content-center">
+              <div class="col-md-8 d-flex justify-content-end" >
+                <div class="pagination">
+                    <form method="POST" action="{{ route('orders.store') }}" class="float-left">
+                      @csrf
+                      {{-- @method("DELETE") --}}
+                      <div class="form-group form-icon">
+                        <button class="btn btn-danger delete-all" type="submit"  data-tooltip="tooltip" data-placement="top" title="Delete">Send to Invoice</button>
+                      </div>
+                  </form>
+                </div>
+              </div>
+          </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8 d-flex justify-content-center" >
+                  {{-- pagination --}}
+                  <div class="pagination">
+                    <!-- $employee->links -->
+                    {{ $orders->render("pagination::bootstrap-4") }}
+                  </div>
+                </div>
+            </div>
+
+            {{-- seperator --}}
+            <div class="separator my-5">
+            </div>
+            
+              {{-- Order Records --}}
+              <div class="row my-4" >
+                  <h3>Orders Record</h3>
+              </div>
 
                 <div class="row py-4">
                     <div class="col-8">
@@ -77,7 +193,7 @@
                             <table class="table">
                               <thead>
                                 <tr>
-                                    <th>Order ID</th>
+                                    <th>Order item ID</th>
                                     <th>Transaction No.</th>
                                     <th>Barcode</th>
                                     <th>Quantity</th>

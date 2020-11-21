@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 
-class InvoiceController extends Controller
+class UserController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -34,32 +35,43 @@ class InvoiceController extends Controller
             ->first();
 
         // ienumerable
-        $invoices = DB::table('invoices')->get();
+        $user_collection = DB::table('users')->get();
 
-        $tableInvoices = Invoice::all();
+        $tableUsers = User::all();
 
-        if ($tableInvoices->isEmpty()) {
-            $invoices = DB::table('invoices')->paginate();
+        if ($tableUsers->isEmpty()) {
+            $user_collection = DB::table('users')->paginate();
         } else {
             // ienumerable
-            $invoices = DB::table('invoices');
+            $user_collection = DB::table('users');
 
             // search validation
-            $search = Invoice::where('invoice_id', 'like', '%' . request()->search . '%')
-                ->OrWhere('status', 'like', '%' . request()->search . '%')
+            $search = User::where('email', 'like', '%' . request()->search . '%')
+                ->OrWhere('name', 'like', '%' . request()->search . '%')
                 ->first();
 
 
             if ($search === null) {
-                return redirect('invoices')->with('danger', 'Invalid Search');
+                return redirect('users')->with('danger', 'Invalid Search');
             } else {
-                $invoices = $invoices->where('invoice_id', 'like', '%' . request()->search . '%')
-                    ->OrWhere('status', 'like', '%' . request()->search . '%')
+                $user_collection = $user_collection->where('email', 'like', '%' . request()->search . '%')
+                    ->OrWhere('email', 'like', '%' . request()->search . '%')
                     ->latest()
                     ->paginate(10);
             }
         }
-        return view('invoices', ['users' => $users, 'invoices' => $invoices]);
+
+        // foreach ($user_collection as $user_item) {
+        //     $value = $user_item->password;
+        //     $sad = Crypt::decrypt($value);
+        // }
+
+
+        return view('users', [
+            'users' => $users,
+            'user_collection' => $user_collection,
+
+        ]);
     }
 
     /**
@@ -86,10 +98,10 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Invoice  $invoice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Invoice $invoice)
+    public function show($id)
     {
         //
     }
@@ -97,10 +109,10 @@ class InvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Invoice  $invoice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Invoice $invoice)
+    public function edit($id)
     {
         //
     }
@@ -109,10 +121,10 @@ class InvoiceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Invoice  $invoice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Invoice $invoice)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -120,12 +132,11 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Invoice  $invoice
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($invoice_id)
+    public function destroy($id)
     {
-        Invoice::destroy($invoice_id);
-        return redirect('invoices')->with('success', 'Sucessfully Deleted!');
+        //
     }
 }

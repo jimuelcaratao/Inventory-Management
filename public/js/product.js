@@ -89,6 +89,7 @@ $(document).ready(function() {
           var barcodeImg =el.data("item-barcode");
           var productname =el.data("item-productname");
           var description =el.data("item-description");
+          var specs =el.data("item-specs");
           var category =el.data("item-category");
           var brand =el.data("item-brand");
           var stock =el.data("item-stock");
@@ -103,6 +104,7 @@ $(document).ready(function() {
           $("#barcodeImg").val(barcodeImg);
           $("#editProductName").val(productname);
           $("#editDescription").val(description);
+          $("#editSpecs").val(specs);
           $("#editCategory").val(category);
           $("#editBrand").val(brand);
           $("#editStock").val(stock);

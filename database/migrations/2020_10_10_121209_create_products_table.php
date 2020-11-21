@@ -17,7 +17,8 @@ class CreateProductsTable extends Migration
             $table->string('barcode', 20)->primary();
             $table->string('sku', 30)->unique();
             $table->string('product_name', 50);
-            $table->string('description', 100)->nullable();
+            $table->text('description', 100)->nullable();
+            $table->longText('specs')->nullable();
             $table->string('category', 100);
             $table->string('brand', 100);
             $table->string('stock', 100);

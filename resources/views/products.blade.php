@@ -19,6 +19,8 @@
       <a href="{{ URL::to('suppliers') }}"><i class="fas fa-phone icons icon_color"></i><span class="navbar-span">Supplier</span></a>
       <a href="{{ URL::to('invoices') }}"><i class="fas fa-file-invoice icons icon_color"></i><span class="navbar-span">Invoice</span></a>
       <a href="{{ URL::to('analytics') }}"><i class="fas fa-chart-bar icons icon_color"></i><span class="navbar-span">Analytics</span></a>
+      <a href="{{ URL::to('users') }}" ><i class="fas fa-users icons"></i><span class="navbar-span icon_color">Users</span></a>
+
   </div>
   <!-- for navbar hambuger -->
   <div class="hamburger" id="hamburger-nav">
@@ -87,9 +89,7 @@
         </div>
         <div class="row">
           <div class="col">
-            {{-- @foreach ($productPhotos as $productPhoto) 
-            <img src="data:image/png;base64,{{ chunk_split(base64_encode($productPhoto->photo)) }}" >
-            @endforeach --}}
+
 
 
  <!-- Trigger the modal with a button -->
@@ -126,6 +126,7 @@
                           <th>SKU</th>
                           <th>ProductName</th>
                           <th>Description</th>
+                          <th>Specs</th>
                           <th>Category</th>
                           <th>Brand</th>
                           <th>Stock</th>
@@ -139,6 +140,7 @@
                               <td>{{$product->sku}}</td>
                               <td>{{$product->product_name}}</td>
                               <td>{{$product->description}}</td>
+                              <td>{{$product->specs}}</td>
                               <td>{{$product->category}}</td>
                               <td>{{$product->brand}}</td>
                               <td>{{$product->stock}}</td>
@@ -154,10 +156,11 @@
                                 data-placement="top"
                                 title="Edit"
                                 data-community="{{ json_encode($product) }}"
-                                data-item-sku="{{ $product->sku }}"
                                 data-item-barcode="{{ $product->barcode }}"
+                                data-item-sku="{{ $product->sku }}"
                                 data-item-productname="{{ $product->product_name }}"
                                 data-item-description="{{ $product->description }}"
+                                data-item-specs="{{ $product->specs }}"
                                 data-item-category="{{ $product->category }}"
                                 data-item-brand="{{ $product->brand }}"
                                 data-item-stock="{{ $product->stock }}"
@@ -179,7 +182,7 @@
                           </tr>
                         @empty
                           <tr>
-                            <td colspan="9" style="text-align: center">
+                            <td colspan="10" style="text-align: center">
                               <h3>No data!</h3>
                             </td>
                           </tr>
@@ -313,6 +316,12 @@
                         <input type="text" name="inputDescription" class="form-control" id="inputDescription" required>
                     </div>
                     <!-- /Description -->
+                    <!-- Specs --> 
+                      <div class="form-group input-group-sm">
+                          <label class="col-form-label" for="inputSpecs">Specs</label>
+                          <input type="text" name="inputSpecs" class="form-control" id="inputSpecs" required>
+                      </div>
+                    <!-- /Specs -->
                     <!-- Category --> 
                     <div class="form-group input-group-sm">
                         <label for="inputCategory">Category</label>
@@ -457,6 +466,12 @@
                         <input type="text" name="editDescription" class="form-control" id="editDescription" required>
                     </div>
                     <!-- /Description -->
+                    <!-- Specs --> 
+                    <div class="form-group input-group-sm">
+                        <label class="col-form-label" for="editSpecs">Specs</label>
+                        <input type="text" name="editSpecs" class="form-control" id="editSpecs" required>
+                    </div>
+                    <!-- /Specs -->
                     <!-- Category --> 
                     <div class="form-group input-group-sm">
                         <label for="editCategory">Category</label>

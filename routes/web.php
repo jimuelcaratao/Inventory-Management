@@ -8,6 +8,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDescriptionController;
 use App\Http\Controllers\UserSecurityController;
 use App\Http\Resources\ProductImages;
@@ -58,13 +59,12 @@ Route::resource('/user_security', UserSecurityController::class);
 
 Route::resource('/analytics', AnalyticController::class);
 
+Route::resource('/users', UserController::class);
 
 
 // Auth::routes();
 Auth::routes();
 
-
-Route::get('/get_images', [App\Http\Controllers\ProductController::class, 'getDisplay'])->name('get_images');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -88,6 +88,7 @@ Route::get('/invoices', [App\Http\Controllers\InvoiceController::class, 'index']
 
 Route::get('/analytics', [App\Http\Controllers\AnalyticController::class, 'index'])->name('analytics')->middleware('is_admin');
 
+Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users')->middleware('is_admin');
 
 // Resources
 

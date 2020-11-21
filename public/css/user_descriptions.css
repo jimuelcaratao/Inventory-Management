@@ -8,3 +8,8 @@
 .active-profile {
     border-bottom: black 1px solid;
 }
+.btn-close {
+    position: absolute;
+    top: 8%;
+    left: 60%;
+}

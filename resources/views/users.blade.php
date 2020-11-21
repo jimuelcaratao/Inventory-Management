@@ -15,9 +15,9 @@
         <a href="{{ URL::to('categories') }}"><i class="fas fa-clipboard icons"></i><span class="navbar-span icon_color">Category</span></a>
         <a href="{{ URL::to('brands') }}"><i class="fas fa-tags icons"></i><span class="navbar-span icon_color">Brand</span></a>
         <a href="{{ URL::to('suppliers') }}" ><i class="fas fa-phone icons"></i><span class="navbar-span icon_color">Supplier</span></a>
-        <a href="{{ URL::to('invoices') }}" class="navbar-link-active"><i class="fas fa-file-invoice icons"></i><span class="navbar-span icon_color">Invoice</span></a>
+        <a href="{{ URL::to('invoices') }}" ><i class="fas fa-file-invoice icons"></i><span class="navbar-span icon_color">Invoice</span></a>
         <a href="{{ URL::to('analytics') }}"><i class="fas fa-chart-bar icons"></i><span class="navbar-span icon_color">Analytics</span></a>
-        <a href="{{ URL::to('users') }}" ><i class="fas fa-users icons"></i><span class="navbar-span icon_color">Users</span></a>
+        <a href="{{ URL::to('users') }}" class="navbar-link-active"><i class="fas fa-users icons"></i><span class="navbar-span icon_color">Users</span></a>
 
     </div>
     <!-- for navbar hambuger -->
@@ -53,7 +53,7 @@
 
             <div class="container custom-container pl-5">
                 <div class="row my-4" >
-                    <h3>Invoices</h3>
+                    <h3>Users</h3>
                 </div>
 
                 <div class="row py-4">
@@ -72,7 +72,7 @@
                         {{-- <button type="submit" data-community="{{ json_encode($categories) }}" data-toggle="modal" data-target="add-modal" id="add-item" class="add-btn btn btn-primary float-right"><i class="fas fa-plus mr-1"></i>ADD CATEGORY</button> --}}
                     </div>
                 </div>
-                
+                {{-- table --}}
                 <div class="row py-4">
                     <div class="col">
                          {{-- tables --}}
@@ -80,21 +80,29 @@
                             <table class="table">
                               <thead>
                                 <tr>
-                                    <th>Invoice No.</th>
                                     <th>User ID</th>
-                                    <th>Status</th>
-                                    <th>Shipped date</th>
-                                    <th>Arriving date</th>
+                                    <th>Nickname</th>
+                                    <th>Email</th>
+                                    <th>Account type</th>
+                                    {{-- <th>Password</th> --}}
+                                    <th>Created at</th>
+                                    <th>Updated at</th>
                                     <th colspan="2">Action</th>
                                 </tr>
                               </thead>  
-                                @forelse ($invoices as $invoice)
+                                @forelse ($user_collection as $user_item)
                                 <tr class="data-row table-sm table-product">
-                                    <td>{{$invoice->invoice_id}}</td>
-                                    <td>{{$invoice->user_id}}</td>
-                                    <td>{{$invoice->status}}</td>
-                                    <td>{{$invoice->shipped_date}}</td>
-                                    <td>{{$invoice->arriving_date}}</td>
+                                    <td>{{$user_item->id}}</td>
+                                    <td>{{$user_item->name}}</td>
+                                    <td>{{$user_item->email}}</td>
+                                    @if ($user_item->is_admin == 1)
+                                        <td>Admin</td>
+                                    @else
+                                        <td>User</td>
+                                    @endif
+                                    {{-- <td>{{$user_item->password}}</td> --}}
+                                    <td>{{$user_item->created_at}}</td>
+                                    <td>{{$user_item->updated_at}}</td>
                                     <td>
                                       {{-- edit icon --}}
                                       <a
@@ -104,17 +112,19 @@
                                       data-tooltip="tooltip"
                                       data-placement="top"
                                       title="View"
-                                      data-community="{{ json_encode($invoice) }}"
-                                      data-item-id="{{ $invoice->invoice_id }}"
-                                      data-item-user="{{ $invoice->user_id }}"
-                                      data-item-status="{{ $invoice->status }}"
-                                      data-item-shipped="{{ $invoice->shipped_date }}"
-                                      data-item-arrived="{{ $invoice->arriving_date }}"
+                                      data-community="{{ json_encode($user_item) }}"
+                                      data-item-id="{{ $user_item->id }}"
+                                      data-item-name="{{ $user_item->name }}"
+                                      data-item-email="{{ $user_item->email }}"
+                                      data-item-is_admin="{{ $user_item->is_admin }}"
+                                      data-item-password="{{ $user_item->password }}"
+                                      data-item-created_at="{{ $user_item->created_at }}"
+                                      data-item-updated_at="{{ $user_item->updated_at }}"
                                       id="edit-item"
                                       ><i class="fas fa-list icons"></i></a>
             
                                       {{-- delete icon --}}
-                                      <form method="POST" action="/invoices/{{$invoice->invoice_id}}" class="float-left">
+                                      <form method="POST" action="/users/{{$user_item->id}}" class="float-left">
                                         @csrf
                                         @method("DELETE")
                                         <div class="form-group form-icon">
@@ -140,7 +150,7 @@
                       {{-- pagination --}}
                       <div class="pagination">
                         <!-- $employee->links -->
-                        {{ $invoices->render("pagination::bootstrap-4") }}
+                        {{ $user_collection->render("pagination::bootstrap-4") }}
                       </div>
                     </div>
                 </div>
@@ -152,76 +162,14 @@
     {{-- end of main container --}}
 </div>
 
-<!-- Edit Modal -->
-<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
-  <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="edit-modal-label">Edit Data</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="attachment-body-content">
-        @forelse ($invoices as $invoice)
-        <form id="edit-form_{{$invoice->invoice_id}}" class="form-horizontal" method="POST" action="/invoices/{{$invoice->invoice_id}}">
-        @empty
-        @endforelse
-          @csrf
-          {{ method_field('PUT') }}
-          <div class="card text-dark bg-light mb-0">
-            <div class="card-header">
-              <h2 class="m-0">Edit</h2>
-            </div>
-            <div class="card-body">
-                  <!-- Transaction No -->
-              <div class="form-group input-group-sm">
-                  <label class="col-form-label" for="editTransactionNo">Transaction No</label>
-                  <input type="text" name="editTransactionNo" class="form-control " id="editTransactionNo" readonly >
-              </div>
-              <!-- /Transaction No -->
-              <!-- User ID --> 
-              <div class="form-group input-group-sm">
-                  <label class="col-form-label" for="editUserID">User ID</label>
-                  <input type="text" name="editUserID" class="form-control " id="editUserID" readonly >
-              </div>
-              <!-- /User ID -->
-              <!-- Status --> 
-              <div class="form-group input-group-sm">
-                <label class="col-form-label" for="editStatus">Status</label>
-                <input type="text" name="editStatus" class="form-control " id="editStatus" readonly >
-              </div>
-              <!-- /Status --> 
-              <!-- Shipped Date --> 
-              <div class="form-group input-group-sm">
-                <label class="col-form-label" for="editShippedDate">Shipped Date</label>
-                <input type="text" name="editShippedDate" class="form-control " id="editShippedDate" readonly >
-              </div>
-              <!-- /Shipped Date --> 
-              <!-- Arrived Date --> 
-              <div class="form-group input-group-sm">
-                <label class="col-form-label" for="editArrivedDate">Arrived Date</label>
-                <input type="text" name="editArrivedDate" class="form-control " id="editArrivedDate" readonly >
-              </div>
-              <!-- /Arrived Date --> 
-          </div>
-            <div class="modal-footer form-group">
-              {{-- <button type="submit" name="submit" id="editsearch" class="btn btn-primary ">Save Changes</button> --}}
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          </div>
-        </form>
-      </div>
-      
-    </div>
-  </div>
-</div>
-<!-- /Edit Modal -->
+
 
 @endsection
 
 @push('scripts')
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="{{asset('js/layouts/jquery-3.5.1.min.js')}}"></script>
-  <script src="{{asset('js/invoices.js')}}"></script>
+  {{-- <script src="{{asset('js/invoices.js')}}"></script> --}}
   <script>
     // alert to fade
     $("#element").fadeTo(2000, 500).slideUp(500, function(){

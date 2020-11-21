@@ -55,18 +55,33 @@
         <div class="col-9 col-lg-10">
 
             <div class="card w-100">
-                <form  action="{{ route('user_descriptions.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+
                     <div class="card-body  p-5">
 
                         <input type="hidden" class="form-control" name="userID" value="{{ Auth::user()->id }}" readonly>
                         
                         {{-- avatar display --}}
                         @if($users->photo)
+                        <div class="clearfix">
                             <img class="border mx-auto d-block" src="{{  asset('avatars/'.  Auth::user()->id . '_' . $users->photo ) }}" alt="{{ $users->photo }}" width="200"/>
+
+                            {{-- delete icon --}}
+                            <form method="POST" action="/user_descriptions/{{ Auth::user()->id }}" class="float-left">
+                                @csrf
+                                @method("DELETE")
+                                <button type="submit" title="Delete" class="close btn-close delete-user" aria-label="Delete">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </form>
+
+                        </div>
                         @else
                             <img class="border mx-auto d-block" src="{{  asset('images/user-homepage.png') }}" alt="user-homepage.png" width="200"/>
                         @endif
+
+                <form  action="{{ route('user_descriptions.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+
                         <input class="py-3 mx-auto d-block" type="file"  name="avatar" accept=".jpg,.gif,.png">
 
                         {{-- Nickname --}}
@@ -191,5 +206,13 @@
           $("#element").slideUp(500);
       });
 
+      //delete
+        $('.delete-user').click(function(e){
+            e.preventDefault() // Don't post the form, unless confirmed
+            if (confirm('Are you sure?')) {
+                // Post the form
+                $(e.target).closest('form').submit() // Post the surrounding form
+            }
+        });
     </script>
 @endpush

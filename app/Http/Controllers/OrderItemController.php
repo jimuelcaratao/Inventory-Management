@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 class OrderItemController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,13 +34,41 @@ class OrderItemController extends Controller
             ->Where('id', 'LIKE', '%' . Auth::user()->id .  '%')
             ->first();
 
+        // order Record
+        // ienumerable
+        $orders = DB::table('orders')->get();
 
+        $tableOrder = Order::all();
+
+        if ($tableOrder->isEmpty()) {
+            $orders = DB::table('orders')->paginate();
+        } else {
+            // ienumerable
+            $orders = DB::table('orders');
+
+            // search validation
+            $search = Order::where('transaction_no', 'like', '%' . request()->searchOrder . '%')
+                ->OrWhere('user_id', 'like', '%' . request()->searchOrder . '%')
+                ->first();
+
+
+            if ($search === null) {
+                return redirect('orders')->with('danger', 'Invalid Search');
+            } else {
+                $orders = $orders->where('transaction_no', 'like', '%' . request()->searchOrder . '%')
+                    ->OrWhere('user_id', 'like', '%' . request()->searchOrder . '%')
+                    ->latest()
+                    ->paginate(10, ['*'], 'orders');
+            }
+        }
+
+        // order Record
         // ienumerable
         $order_items = DB::table('order_items')->get();
 
-        $tableOrder = OrderItem::all();
+        $tableOrderItem = OrderItem::all();
 
-        if ($tableOrder->isEmpty()) {
+        if ($tableOrderItem->isEmpty()) {
             $order_items = DB::table('order_items')->paginate();
         } else {
             // ienumerable
@@ -56,7 +94,7 @@ class OrderItemController extends Controller
         return view('orders', [
             'users' => $users,
             'order_items' => $order_items,
-
+            'orders' => $orders,
         ]);
     }
 
@@ -78,7 +116,26 @@ class OrderItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datas = DB::table('orders')->get();
+        try {
+            // insert
+            foreach ($datas as $data) {
+                DB::table('invoices')->insert(
+                    [
+                        'invoice_id' => $data->transaction_no,
+                        'user_id' => $data->user_id,
+                        'status' => $data->status,
+                        'shipped_date' => $data->shipped_date,
+                        'arriving_date' => $data->arriving_date,
+                    ]
+                );
+            }
+            // turncate
+            // Order::truncate();
+            return redirect('orders')->with('success', 'Sucessfully migrated!');
+        } catch (\Illuminate\Database\QueryException $ex) {
+            return redirect('orders')->with('danger', 'Invalid');
+        }
     }
 
     /**

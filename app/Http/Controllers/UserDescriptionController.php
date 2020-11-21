@@ -73,7 +73,10 @@ class UserDescriptionController extends Controller
         //     ]
         // );
         $data = new \DateTime();
-        $user_des = User::updateOrCreate([
+
+
+
+        $user_create = User::updateOrCreate([
             //Add unique field combo to match here
             //For example, perhaps you only want one entry per user:
             'id'   => Auth::user()->id,
@@ -84,8 +87,6 @@ class UserDescriptionController extends Controller
         ]);
 
         $user_des = UserDescription::updateOrCreate([
-            //Add unique field combo to match here
-            //For example, perhaps you only want one entry per user:
             'user_id'   => Auth::user()->id,
         ], [
             'firstname' =>  $request->input('inputFirstname'),
@@ -96,6 +97,7 @@ class UserDescriptionController extends Controller
             'updated_at' => $data
 
         ]);
+
 
 
         if ($request->hasFile('avatar') != null) {
@@ -190,6 +192,14 @@ class UserDescriptionController extends Controller
      */
     public function destroy(UserDescription $userDescription)
     {
-        //
+        $data = new \DateTime();
+
+        $user_photo = UserPhoto::updateOrCreate([
+            'user_id'   => Auth::user()->id,
+        ], [
+            'photo' =>  null,
+            'updated_at' => $data
+        ]);
+        return redirect('user_descriptions');
     }
 }

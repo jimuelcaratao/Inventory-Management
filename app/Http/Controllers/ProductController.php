@@ -28,14 +28,6 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getDisplay()
-    {   // stored in memory
-        $categories = Category::where('status', 'available')
-            ->orderBy('category_name')
-            ->get();
-        return json_encode($categories);
-    }
-
     public function index(Request $request)
     {
         // User Descriptions
@@ -56,25 +48,17 @@ class ProductController extends Controller
             ->orderBy('brand_name')
             ->get();
 
-        // $sad =  session(['data' => $request->value]);
-        // $sadd = strval($sad);
-
-        // $hash = $request->hash;
-
-        // $productPhotos = DB::table('product_photos')
-        //     ->where('barcode', $sadd)
-        //     ->paginate(1);
-
 
         $tableProducts = Product::all();
 
-        // var_dump($productPhotos);
-
         if ($tableProducts->isEmpty()) {
-            $products = DB::table('products');
+            $products = DB::table('products')
+                ->paginate();
         } else {
             // ienumerable
-            $products = DB::table('products');
+            $products = DB::table('products')
+                ->get();
+
 
             // search validation
             $search = Product::where('barcode', 'like', '%' . request()->search . '%')
@@ -93,22 +77,21 @@ class ProductController extends Controller
                 return redirect('products')->with('danger', 'Invalid Search');
             }
             if (!empty(request()->advanceSearch)  ||  !empty(request()->searchBrand) || !empty(request()->searchCategory)) {
-                $products = $products->where('product_name', 'LIKE', '%' . request()->advanceSearch .  '%')
-                    ->where('barcode', 'like', '%' . request()->advanceSearch . '%')
-                    ->where('sku', 'like', '%' . request()->advanceSearch . '%')
+                $products = $products->Where('product_name', 'LIKE', '%' . request()->advanceSearch .  '%')
+                    // ->where('barcode', 'like', '%' . request()->advanceSearch . '%')
+                    // ->where('sku', 'like', '%' . request()->advanceSearch . '%')
                     ->Where('brand', 'LIKE', '%' . request()->searchBrand .  '%')
                     ->Where('category', 'LIKE', '%' . request()->searchCategory .  '%')
                     ->latest()
                     ->paginate(10, ['*'], 'products');
             } else {
-                $products = $products->where('barcode', 'like', '%' . request()->search . '%')
+                $products = $products->Where('barcode', 'like', '%' . request()->search . '%')
                     ->OrWhere('product_name', 'like', '%' . request()->search . '%')
                     ->OrWhere('sku', 'like', '%' . request()->search . '%')
                     ->latest()
                     ->paginate(10, ['*'], 'products');
             }
         }
-
         return view('products', ['users' => $users, 'products' => $products,  'categories' => $categories, 'brands' => $brands]);
     }
 
@@ -119,7 +102,6 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return 100;
     }
 
 
@@ -146,13 +128,13 @@ class ProductController extends Controller
                     'sku' => $request->input('inputSKU'),
                     'product_name' => $request->input('inputProductName'),
                     'description' => $request->input('inputDescription'),
+                    'specs' => $request->input('inputSpecs'),
                     'category' => $request->input('inputCategory'),
                     'brand' => $request->input('inputBrand'),
                     'stock' => $request->input('inputStock'),
                     'price' => $request->input('inputPrice'),
                     'created_at' => $data
                 ]
-
             );
 
             return redirect('products')->with('success', 'Sucessfully added!');
@@ -203,6 +185,7 @@ class ProductController extends Controller
                     'sku' => $request->input('editSKU'),
                     'product_name' => $request->input('editProductName'),
                     'description' => $request->input('editDescription'),
+                    'specs' => $request->input('editSpecs'),
                     'category' => $request->input('editCategory'),
                     'brand' => $request->input('editBrand'),
                     'stock' => $request->input('editStock'),
@@ -258,7 +241,10 @@ class ProductController extends Controller
      */
     public function destroy($barcode)
     {
-        Product::destroy($barcode);
+        // Product::destroy($barcode);
+        DB::table('product_photos')->where('barcode',  $barcode)->delete();
+        DB::table('products')->where('barcode', $barcode)->delete();
+
         return redirect('products')->with('success', 'Sucessfully Deleted!');
     }
 }
