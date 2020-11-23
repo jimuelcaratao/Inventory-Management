@@ -105,11 +105,11 @@
                                         data-placement="top"
                                         title="View"
                                         data-community="{{ json_encode($order) }}"
-                                        data-item-transact="{{ $order->transaction_no }}"
+                                        data-item-transactorder="{{ $order->transaction_no }}"
                                         data-item-id="{{ $order->user_id }}"
                                         data-item-status="{{ $order->status }}"
-                                        data-item-ship="{{ $order->shipped_date }}"
-                                        data-item-arrive="{{ $order->arriving_date }}"
+                                        data-item-shipped_date="{{ $order->shipped_date }}"
+                                        data-item-arriving_date="{{ $order->arriving_date }}"
                                         id="edit-item"
                                         ><i class="fas fa-list icons"></i></a>
                 
@@ -269,6 +269,80 @@
     {{-- end of main container --}}
 </div>
 
+
+{{-- Ordesrs --}}
+<!-- Edit Modal -->
+<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edit-modal-label">Edit Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="attachment-body-content">
+        @forelse ($orders as $order)
+        <form id="edit-form_{{$order->transaction_no}}" class="form-horizontal" method="POST" action="/orders/{{$order->transaction_no}}">
+        @empty
+        @endforelse
+          @csrf
+          {{ method_field('PUT') }}
+          <div class="card text-dark bg-light mb-0">
+            <div class="card-body">
+
+              <!-- Transaction No -->
+              <div class="form-group input-group-sm">
+                  <label class="col-form-label" for="editTransactionNoOrders">Transaction No</label>
+                  <input type="text" name="editTransactionNoOrders" class="form-control " id="editTransactionNoOrders" readonly >
+              </div>
+              <!-- /Transaction No -->
+              <!-- User ID --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editUserID">User ID</label>
+                <input type="text" name="editUserID" class="form-control " id="editUserID" readonly >
+              </div>
+              <!-- /User ID -->
+              <!-- Status --> 
+              <div class="form-group input-group-sm">
+                  <label class="col-form-label" for="editStatusOrders">Status</label>
+                  <select name="editStatusOrders" id="editStatusOrders" class="form-control" required>
+                    <option selected disabled value="">Choose...</option>
+                        <option>Delivered</option>
+                        <option>Shipping</option>
+                        <option>Canceled</option>
+                        <option>Returned</option>
+                  </select>
+              </div>
+              <!-- /Status -->
+              <!-- Shipped date --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editShipped">Shipped date</label>
+                <input type="date" name="editShipped" class="form-control " id="editShipped" required >
+              </div>
+              <!-- /Shipped date --> 
+              <!-- Arriving date --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editArriving">Arriving date</label>
+                <input type="date" name="editArriving" class="form-control " id="editArriving" required >
+              </div>
+              <!-- /Arriving date --> 
+
+          </div>
+            <div class="modal-footer form-group">
+              <button type="submit" name="submit" id="editsearch" class="btn btn-primary ">Save Changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- /Edit Modal -->
+
+
+
+
 {{-- Order Record --}}
 <!-- Edit Modal -->
 <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
@@ -287,9 +361,6 @@
             @csrf
             {{ method_field('PUT') }}
             <div class="card text-dark bg-light mb-0">
-              <div class="card-header">
-                <h2 class="m-0">Edit</h2>
-              </div>
               <div class="card-body">
                 <!-- Order ID --> 
                 <div class="form-group input-group-sm">

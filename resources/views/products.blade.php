@@ -121,26 +121,26 @@
                 <div class="table-container" id="table-container">
                   <table id="dtHorizontalExample" class="table table-striped">
                     <thead>
-                      <tr>
-                          <th>Barcode</th>
-                          <th>SKU</th>
-                          <th>ProductName</th>
-                          <th>Description</th>
-                          <th>Specs</th>
-                          <th>Category</th>
-                          <th>Brand</th>
-                          <th>Stock</th>
-                          <th>Price</th>
-                          <th colspan="2">Action</th>
-                      </tr>
+                    <tr>
+                        <th>Barcode</th>
+                        <th>SKU</th>
+                        <th>ProductName</th>
+                        <th>Description</th>
+                        <th>Specs</th>
+                        <th>Category</th>
+                        <th>Brand</th>
+                        <th>Stock</th>
+                        <th>Price(₱)</th>
+                        <th colspan="2">Action</th>
+                    </tr>
                     </thead>  
                         @forelse ($products as $product)
                           <tr class="data-row table-sm table-product">
                               <td>{{$product->barcode}}</td>
                               <td>{{$product->sku}}</td>
                               <td>{{$product->product_name}}</td>
-                              <td>{{$product->description}}</td>
-                              <td>{{$product->specs}}</td>
+                              <td>{{ \Illuminate\Support\Str::limit($product->description, 20) }}</td>
+                              <td>{{ \Illuminate\Support\Str::limit($product->specs, 15) }}</td>
                               <td>{{$product->category}}</td>
                               <td>{{$product->brand}}</td>
                               <td>{{$product->stock}}</td>
@@ -229,9 +229,6 @@
         <div class="modal-body" id="attachment-body-content">
         <form id="search-form" class="form-horizontal" action="/products" method="GET">
             <div class="card text-black bg-light mb-0">
-              <div class="card-header">
-                <h2 class="m-0">Search</h2>
-              </div>
               <div class="card-body">
                 <!-- Search bar --> 
                 <div class="form-group input-group-sm">
@@ -287,9 +284,6 @@
             <form id="add-form" class="form-horizontal" action="{{ route('products.store') }}" method="POST">
                 @csrf
                 <div class="card text-black bg-light mb-0">
-                  <div class="card-header">
-                    <h2 class="m-0">ADD</h2>
-                  </div>
                   <div class="card-body">
 
                     <!-- Barcode -->
@@ -313,7 +307,7 @@
                     <!-- Description --> 
                     <div class="form-group input-group-sm">
                         <label class="col-form-label" for="inputDescription">Description</label>
-                        <input type="text" name="inputDescription" class="form-control" id="inputDescription" required>
+                        <textarea  type="text" name="inputDescription" class="form-control" id="inputDescription" rows="4" required></textarea>
                     </div>
                     <!-- /Description -->
                     <!-- Specs --> 
@@ -388,9 +382,6 @@
               @csrf
               {{ method_field('PUT') }}
               <div class="card text-dark bg-light mb-0">
-                <div class="card-header">
-                  <h2 class="m-0">Edit</h2>
-                </div>
                 <div class="card-body">
                   {{-- Display images --}}
                     <!-- Swiper -->
@@ -463,7 +454,9 @@
                     <!-- Description --> 
                     <div class="form-group input-group-sm">
                         <label class="col-form-label" for="editDescription">Description</label>
-                        <input type="text" name="editDescription" class="form-control" id="editDescription" required>
+                        {{-- <input type="text" name="editDescription" class="form-control" id="editDescription" required> --}}
+                        <textarea  type="text" name="editDescription" class="form-control" id="editDescription" rows="4" required></textarea>
+
                     </div>
                     <!-- /Description -->
                     <!-- Specs --> 

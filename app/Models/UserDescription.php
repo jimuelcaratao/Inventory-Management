@@ -12,6 +12,11 @@ class UserDescription extends Model
     protected $table = 'user_descriptions';
     protected $primaryKey = 'user_description_id';
 
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
     protected $fillable = [
         'user_description_id',
         'user_id',

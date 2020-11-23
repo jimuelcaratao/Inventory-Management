@@ -3,6 +3,18 @@
 @push('css')
     <link rel="stylesheet" href="{{asset('css/auth.css')}}">
 @endpush
+
+@push('links')
+    <li class="nav-item">
+        <a class="nav-link font-weight-bold" href="{{ route('login') }}">{{ __('Login') }}</a>
+    </li>
+    @if (Route::has('register'))
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+        </li>
+    @endif
+@endpush
+
 @section('content')
 
 <div class="container">
@@ -11,12 +23,22 @@
         <img src="{{  asset('images/fb-dp-HJM.png' ) }}" alt="avatars" width="150"/>
     </div> --}}
 
-    <div class="row justify-content-end py-4">
-        <div class="col-md-6 ">
+    <div class="row pt-4 ">
+        <div class="col img_logo">
+            <img class="border rounded-circle" src="{{ asset('images/fb-dp-HJM.png') }}" alt="" width="150px;">
+        </div>
+    </div>
+
+    <div class="row py-4">
+        <div class="col-md-6 pt-3 img_login">
+            <img class="" src="{{ asset('images/feeling_proud.svg') }}" alt="" width="400px;">
+        </div>
+
+        <div class="col-md-6 pt-4">
             <div class="card border-0">
                 {{-- <div class="card-header">{{ __('Login') }}</div> --}}
 
-                <div class="card-body pt-5">
+                <div class="card-body pt-4">
                     <div class="login-text py-2 offset-md-1">
                         <h4>Sign-in</h4>
                     </div>
@@ -27,7 +49,7 @@
                             {{-- <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label> --}}
 
                             <div class="col-md-8 input-group-sm offset-md-1">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="E-mail address" required autocomplete="email" autofocus>
+                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Username or E-mail address" required autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -70,7 +92,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-2">
-                                <button type="submit" class="btn btn-primary login-btn">
+                                <button type="submit" class="btn-custom login-btn">
                                     {{ __('Login') }}
                                 </button>
 

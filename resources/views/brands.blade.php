@@ -169,9 +169,6 @@
         <form id="add-form" class="form-horizontal" action="{{ route('brands.store') }}" method="POST">
             @csrf
             <div class="card text-black bg-light mb-0">
-              <div class="card-header">
-                <h2 class="m-0">ADD</h2>
-              </div>
               <div class="card-body">
 
                 <!-- ID -->
@@ -229,9 +226,6 @@
             @csrf
             {{ method_field('PUT') }}
             <div class="card text-dark bg-light mb-0">
-              <div class="card-header">
-                <h2 class="m-0">Edit</h2>
-              </div>
               <div class="card-body">
                     <!-- ID -->
                 <div class="form-group input-group-sm">

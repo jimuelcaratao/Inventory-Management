@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -50,11 +51,18 @@ class LoginController extends Controller
         //     'password' => 'required',
         // ]);
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required',
             'password' => 'required',
         ]);
         $remember =  $request->input('remember');
+
         if (Auth::attempt(['email' => $input['email'], 'password' =>  $input['password']], $remember)) {
+            if (auth()->user()->is_admin == 1) {
+                return redirect()->route('admin.home');
+            } else {
+                return redirect()->route('home');
+            }
+        } else if (Auth::attempt(['name' => $input['email'], 'password' =>  $input['password']], $remember)) {
             if (auth()->user()->is_admin == 1) {
                 return redirect()->route('admin.home');
             } else {

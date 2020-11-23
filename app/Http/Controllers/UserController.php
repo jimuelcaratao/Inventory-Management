@@ -24,7 +24,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // User Descriptions
         $users = DB::table('users')
@@ -34,17 +34,17 @@ class UserController extends Controller
             ->Where('id', 'LIKE', '%' . Auth::user()->id .  '%')
             ->first();
 
-        // ienumerable
-        $user_collection = DB::table('users')->get();
 
         $tableUsers = User::all();
 
         if ($tableUsers->isEmpty()) {
-            $user_collection = DB::table('users')->paginate();
+            $user_collection = DB::table('users')
+                ->paginate();
         } else {
             // ienumerable
-            $user_collection = DB::table('users');
-
+            $user_collection = DB::table('users')
+                ->join('user_descriptions', 'users.id', '=', 'user_descriptions.user_id');
+            // $user_collection = User::with(['user_descriptions']);
             // search validation
             $search = User::where('email', 'like', '%' . request()->search . '%')
                 ->OrWhere('name', 'like', '%' . request()->search . '%')
@@ -54,9 +54,10 @@ class UserController extends Controller
             if ($search === null) {
                 return redirect('users')->with('danger', 'Invalid Search');
             } else {
-                $user_collection = $user_collection->where('email', 'like', '%' . request()->search . '%')
+                $user_collection = $user_collection
+                    ->where('email', 'like', '%' . request()->search . '%')
                     ->OrWhere('email', 'like', '%' . request()->search . '%')
-                    ->latest()
+                    // ->latest()
                     ->paginate(10);
             }
         }

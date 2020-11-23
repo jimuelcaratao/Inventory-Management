@@ -81,7 +81,7 @@
                               <thead>
                                 <tr>
                                     <th>User ID</th>
-                                    <th>Nickname</th>
+                                    <th>Username</th>
                                     <th>Email</th>
                                     <th>Account type</th>
                                     {{-- <th>Password</th> --}}
@@ -120,17 +120,23 @@
                                       data-item-password="{{ $user_item->password }}"
                                       data-item-created_at="{{ $user_item->created_at }}"
                                       data-item-updated_at="{{ $user_item->updated_at }}"
+                                      data-item-firstname="{{ $user_item->firstname }}"
+                                      data-item-middlename="{{ $user_item->middlename }}"
+                                      data-item-lastname="{{ $user_item->lastname }}"
+                                      data-item-contact="{{ $user_item->contact }}"
+                                      data-item-address="{{ $user_item->address }}"
+
                                       id="edit-item"
                                       ><i class="fas fa-list icons"></i></a>
             
                                       {{-- delete icon --}}
-                                      <form method="POST" action="/users/{{$user_item->id}}" class="float-left">
+                                      {{-- <form method="POST" action="/users/{{$user_item->id}}" class="float-left">
                                         @csrf
                                         @method("DELETE")
                                         <div class="form-group form-icon">
                                           <i class="fas fa-trash-alt delete-user icons" type="submit"  data-tooltip="tooltip" data-placement="top" title="Delete"></i>
                                         </div>
-                                      </form>
+                                      </form> --}}
                                     </td>
                                 </tr>
                                     @empty
@@ -163,13 +169,118 @@
 </div>
 
 
+<!-- Edit Modal -->
+<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edit-modal-label">View Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="attachment-body-content">
+        @forelse ($user_collection as $user_item)
+        <form id="edit-form_{{$user_item->id}}" class="form-horizontal" method="POST" action="/users/{{$user_item->id}}">
+        @empty
+        @endforelse
+          @csrf
+          {{ method_field('PUT') }}
+          <div class="card text-dark bg-light mb-0">
+            <div class="card-body">
+
+              <!-- User ID --> 
+              <div class="form-group input-group-sm">
+                  <label class="col-form-label" for="editUserID">User ID</label>
+                  <input type="text" name="editUserID" class="form-control " id="editUserID" readonly >
+              </div>
+              <!-- /User ID -->
+              <!-- Username --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editUsername">Username</label>
+                <input type="text" name="editUsername" class="form-control " id="editUsername" readonly >
+              </div>
+              <!-- /Username --> 
+              <!-- Email --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editEmail">Email</label>
+                <input type="text" name="editEmail" class="form-control " id="editEmail" readonly >
+              </div>
+              <!-- /Email --> 
+              <!-- Account Type --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editAccountType">Account Type</label>
+                <input type="text" name="editAccountType" class="form-control " id="editAccountType" readonly >
+              </div>
+              <!-- /Account Type --> 
+              <!-- Password --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editPassword">Password</label>
+                <input type="text" name="editPassword" class="form-control " id="editPassword" readonly >
+              </div>
+              <!-- /Password --> 
+
+              <!-- First name --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editFirstname">First name</label>
+                <input type="text" name="editFirstname" class="form-control " id="editFirstname" readonly >
+              </div>
+              <!-- /First name --> 
+              <!-- Middle name --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editMiddlename">Middle name</label>
+                <input type="text" name="editMiddlename" class="form-control " id="editMiddlename" readonly >
+              </div>
+              <!-- /Middle name --> 
+              <!-- Last name --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editLastname">Last name</label>
+                <input type="text" name="editLastname" class="form-control " id="editLastname" readonly >
+              </div>
+              <!-- /Last name --> 
+              <!-- Contact --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editContact">Contact</label>
+                <input type="text" name="editContact" class="form-control " id="editContact" readonly >
+              </div>
+              <!-- /Contact --> 
+              <!-- Address --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editAddress">Address</label>
+                <input type="text" name="editAddress" class="form-control " id="editAddress" readonly >
+              </div>
+              <!-- /Address --> 
+              <!-- Created at --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editCreated">Created at</label>
+                <input type="text" name="editCreated" class="form-control " id="editCreated" readonly >
+              </div>
+              <!-- /Created at --> 
+              <!-- Updated at --> 
+              <div class="form-group input-group-sm">
+                <label class="col-form-label" for="editUpdated">Updated at</label>
+                <input type="text" name="editUpdated" class="form-control " id="editUpdated" readonly >
+              </div>
+              <!-- /Updated at --> 
+          </div>
+            <div class="modal-footer form-group">
+              {{-- <button type="submit" name="submit" id="editsearch" class="btn btn-primary ">Save Changes</button> --}}
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- /Edit Modal -->
+
 
 @endsection
 
 @push('scripts')
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="{{asset('js/layouts/jquery-3.5.1.min.js')}}"></script>
-  {{-- <script src="{{asset('js/invoices.js')}}"></script> --}}
+  <script src="{{asset('js/users.js')}}"></script>
   <script>
     // alert to fade
     $("#element").fadeTo(2000, 500).slideUp(500, function(){

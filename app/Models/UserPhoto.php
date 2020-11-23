@@ -12,6 +12,11 @@ class UserPhoto extends Model
     protected $table = 'user_photos';
     protected $primaryKey = 'user_photo_id';
 
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
     protected $fillable = [
         'user_photo_id',
         'user_id',

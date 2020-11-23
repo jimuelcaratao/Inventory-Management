@@ -56,8 +56,7 @@ class ProductController extends Controller
                 ->paginate();
         } else {
             // ienumerable
-            $products = DB::table('products')
-                ->get();
+            $products = DB::table('products');
 
 
             // search validation
@@ -77,6 +76,7 @@ class ProductController extends Controller
                 return redirect('products')->with('danger', 'Invalid Search');
             }
             if (!empty(request()->advanceSearch)  ||  !empty(request()->searchBrand) || !empty(request()->searchCategory)) {
+
                 $products = $products->Where('product_name', 'LIKE', '%' . request()->advanceSearch .  '%')
                     // ->where('barcode', 'like', '%' . request()->advanceSearch . '%')
                     // ->where('sku', 'like', '%' . request()->advanceSearch . '%')

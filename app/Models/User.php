@@ -42,4 +42,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function user_descriptions()
+    {
+        return $this->belongsTo(UserDescription::class);
+    }
+    public function user_photos()
+    {
+        return $this->belongsTo(UserPhoto::class);
+    }
 }

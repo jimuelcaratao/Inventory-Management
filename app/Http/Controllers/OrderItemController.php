@@ -169,7 +169,18 @@ class OrderItemController extends Controller
      */
     public function update(Request $request, OrderItem $orderItem)
     {
-        //
+        $data = new \DateTime();
+        DB::table('orders')
+            ->where('transaction_no', $request->input('editTransactionNoOrders'))
+            ->update(
+                [
+                    'status' => $request->input('editStatusOrders'),
+                    'shipped_date' => $request->input('editShipped'),
+                    'arriving_date' => $request->input('editArriving'),
+                    'updated_at' => $data
+                ]
+            );
+        return redirect('orders')->with('success', ' ' . $request->input('editTransactionNoOrders') . ' Sucessfully edited!');
     }
 
     /**

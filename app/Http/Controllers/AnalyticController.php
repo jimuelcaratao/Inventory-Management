@@ -95,7 +95,12 @@ class AnalyticController extends Controller
             ->where('status', 'Delivered')
             ->count();
 
-        // cancelled
+        // Shipping
+        $orders_shipping = DB::table('orders')
+            ->where('status', 'Shipping')
+            ->count();
+
+        // Returned
         $orders_returned = DB::table('orders')
             ->where('status', 'Returned')
             ->count();
@@ -109,6 +114,7 @@ class AnalyticController extends Controller
             'best_seller' => $best_seller,
             'orders_canceled' => $orders_canceled,
             'orders_delivered' => $orders_delivered,
+            'orders_shipping' => $orders_shipping,
             'orders_returned' => $orders_returned,
 
 

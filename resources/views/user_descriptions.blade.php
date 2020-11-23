@@ -62,31 +62,31 @@
                         
                         {{-- avatar display --}}
                         @if($users->photo)
-                        <div class="clearfix">
-                            <img class="border mx-auto d-block" src="{{  asset('avatars/'.  Auth::user()->id . '_' . $users->photo ) }}" alt="{{ $users->photo }}" width="200"/>
+                            <div class="clearfix">
+                                <img class="border mx-auto d-block" src="{{  asset('avatars/'.  Auth::user()->id . '_' . $users->photo ) }}" alt="{{ $users->photo }}" width="200"/>
 
-                            {{-- delete icon --}}
-                            <form method="POST" action="/user_descriptions/{{ Auth::user()->id }}" class="float-left">
-                                @csrf
-                                @method("DELETE")
-                                <button type="submit" title="Delete" class="close btn-close delete-user" aria-label="Delete">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </form>
+                                {{-- delete icon --}}
+                                <form method="POST" action="/user_descriptions/{{ Auth::user()->id }}" class="float-left">
+                                    @csrf
+                                    @method("DELETE")
+                                    <button type="submit" title="Delete" class="close btn-close delete-user" aria-label="Delete">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </form>
 
-                        </div>
+                            </div>
                         @else
                             <img class="border mx-auto d-block" src="{{  asset('images/user-homepage.png') }}" alt="user-homepage.png" width="200"/>
                         @endif
 
                 <form  action="{{ route('user_descriptions.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-
-                        <input class="py-3 mx-auto d-block" type="file"  name="avatar" accept=".jpg,.gif,.png">
+                    {{-- <i class="fas fa-camera fa-lg"></i> --}}
+                    <input class="py-3 mx-auto d-block" type="file"  name="avatar" accept=".jpg,.gif,.png">
 
                         {{-- Nickname --}}
                         <div class="form-group row small">
-                            <label for="inputNickname" class="col-sm-2 col-form-label small">Nickname</label>
+                            <label for="inputNickname" class="col-sm-2 col-form-label small">Username</label>
                             <div class="col-sm-8 input-group-sm">
                                 <input type="text" class="form-control" id="inputNickname" name="inputNickname" value="{{ $users->name }}" readonly>
                             </div>

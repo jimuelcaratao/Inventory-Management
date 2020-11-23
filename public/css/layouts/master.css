@@ -186,6 +186,7 @@ table td {
     border-bottom: 1px #d3d3d3 solid;
 }
 .table td {
+    width: 100px; /* adjust the value to fit your needs */
     font-size: 12px !important;
     padding-left: 15px !important;
 }
@@ -193,6 +194,25 @@ table td {
 .form-icon {
     margin-bottom: -10px !important;
 }
+.img_logo {
+    display: none;
+}
+
+/* custom button */
+.btn-custom {
+    border-radius: 5%;
+    color: #fff;
+    background-color: #404040;
+    border-color: #404040;
+}
+
+.btn-custom:hover {
+    color: #fff;
+    background-color: #b8b8b8;
+    border-color: #b8b8b8;
+}
+
+/* preloader */
 
 @media (max-width: 992px) {
     /*for navbar*/
@@ -216,10 +236,27 @@ table td {
     .main-container {
         padding: 2%;
     }
+    /* login */
+    .img_login {
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {
+    /* login */
+    .img_login {
+        display: none;
+    }
 }
 
 @media (max-width: 576px) {
+    /* login */
+    .img_login {
+        display: none;
+    }
+    .img_logo {
+        display: block;
+        margin-left: 28%;
+        margin-bottom: -10%;
+    }
 }

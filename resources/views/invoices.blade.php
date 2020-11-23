@@ -157,7 +157,7 @@
   <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="edit-modal-label">Edit Data</h5>
+        <h5 class="modal-title" id="edit-modal-label">View Data</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -169,9 +169,6 @@
           @csrf
           {{ method_field('PUT') }}
           <div class="card text-dark bg-light mb-0">
-            <div class="card-header">
-              <h2 class="m-0">Edit</h2>
-            </div>
             <div class="card-body">
                   <!-- Transaction No -->
               <div class="form-group input-group-sm">

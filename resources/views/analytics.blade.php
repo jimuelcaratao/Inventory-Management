@@ -139,9 +139,9 @@
                     <div class="col-md-4 pb-1 mb-4">
                         <div class="card">
                             <div class="card-body">
-                              <h6 class="card-title">Deliverd Orders</h6>
+                              <h6 class="card-title">Shipping Orders</h6>
                               {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
-                              <h1 class="card-text">{{ $orders_delivered }}</h1>
+                              <h1 class="card-text">{{ $orders_shipping }}</h1>
                                 {{-- <img src="{{asset('images/user-homepage.png')}}" class="card-image"> --}}
                               <a href="#" class="card-link">view more</a>
                             </div>
