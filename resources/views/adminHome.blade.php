@@ -53,7 +53,7 @@
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
                                 <h1 class="card-text">{{ $users_count }}</h1>
                                 <img src="{{asset('images/user-homepage.png')}}" class="card-image">
-                                <a href="#" class="card-link">view more</a>
+                                <a href="{{ URL::to('users') }}" class="card-link">view more</a>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
                                 <h1 class="card-text">{{ $orders_count_today }}</h1>
                                 <img src="{{asset('images/order.png')}}" class="card-image">
-                                <a href="{{ URL::to('invoices') }}" class="card-link">view more</a>
+                                <a href="{{ URL::to('orders') }}" class="card-link">view more</a>
                             </div>
                         </div>
                     </div>
@@ -90,8 +90,8 @@
                             <div class="card-body">
                                 <h5 class="card-title">Earned last month</h5>
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
-                                <h1 class="card-text">{{ $earned_month }}</h1>
-                                <a href="#" class="card-link">view more</a>
+                                <h1 class="card-text">₱{{ $earned_month }}</h1>
+                                <a href="{{ URL::to('analytics') }}" class="card-link">view more</a>
                             </div>
                         </div>
                         <div class="card mb-2" style="width: 15rem;">
@@ -113,7 +113,7 @@
 
                               <div id="chartContainer" style="height: 300px; width: 100%;"></div>
 
-                              <a href="#" class="card-link">view more</a>
+                              <a href="{{ URL::to('analytics') }}" class="card-link">view more</a>
                             </div>
                         </div>
                     </div>

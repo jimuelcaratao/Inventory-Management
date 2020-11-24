@@ -61,6 +61,10 @@ Route::resource('/analytics', AnalyticController::class);
 
 Route::resource('/users', UserController::class);
 
+// Route::resource([
+//     '/products', ProductController::class,
+// ]);
+
 
 // Auth::routes();
 Auth::routes();

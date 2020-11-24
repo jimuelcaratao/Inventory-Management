@@ -45,9 +45,10 @@
                 <div class="row py-4">
                     <div class="card w-100">
                         <div class="card-header bg-white shadow-sm">
-                            <div class="header">
+                            <div class="header text-primary">
                                 <h3>Sales analysis</h3>
                             </div>
+
                           {{-- datepicker --}}
                           <form action="/analytics" method="GET" id="datePicker" class="form-inline col align-self-end">
                                 <label for="sales_from ">from:</label>
@@ -78,11 +79,9 @@
                 <div class="row py-4">
                     {{-- New products --}}
                     <div class="col-md-6 pb-1">
-                        <div class="card" >
-                            <div class="card-body">
-                              <h5 class="card-title">Products Added</h5>
-                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
-
+                        <div class="card " >
+                            <div class="card-body border-custom-skyblue">
+                              <h5 class="card-title text-primary">Products Added</h5>
                               <form action="/analytics" method="GET" id="datePickerProducts" class="form-inline col align-self-end">
                                     <label for="product_month ">Month:</label>
                                     <div class="form-group input-group-sm  ml-2">
@@ -94,7 +93,7 @@
                                 </form>
 
                               <h1 class="card-text pt-4">{{ $new_products }}</h1>
-                              <a href="#" class="card-link">view more</a>
+                              <a href="{{ URL::to('products') }}" class="card-link">view more</a>
                             </div>
                         </div>
                     </div>
@@ -102,10 +101,8 @@
                     {{-- TBA --}}
                     <div class="col-md-6 pb-1">
                         <div class="card" >
-                            <div class="card-body">
-                              <h5 class="card-title">New Users</h5>
-                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
-
+                            <div class="card-body border-custom-skyblue">
+                              <h5 class="card-title text-primary">New Users</h5>
                               <form action="/analytics" method="GET" id="datePickerProducts" class="form-inline col align-self-end">
                                     <label for="user_month ">Month:</label>
                                     <div class="form-group input-group-sm  ml-2">
@@ -117,7 +114,7 @@
                                 </form>
 
                               <h1 class="card-text pt-4">{{ $new_users }}</h1>
-                              <a href="#" class="card-link">view more</a>
+                              <a href="{{ URL::to('users') }}" class="card-link">view more</a>
                             </div>
                         </div>
                     </div>
@@ -128,71 +125,65 @@
                     
                     <div class="col-md-4 pb-1 mb-4">
                         <div class="card">
-                            <div class="card-body">
-                              <h6 class="card-title">Total Orders</h6>
-                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
+                            <div class="card-body border-custom-skyblue">
+                              <h6 class="card-title text-primary">Total Orders</h6>
                               <h1 class="card-text">{{ $orders_count }}</h1>
-                              <a href="#" class="card-link">view more</a>
+                              {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 pb-1 mb-4">
                         <div class="card">
-                            <div class="card-body">
-                              <h6 class="card-title">Shipping Orders</h6>
-                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
+                            <div class="card-body border-custom-skyblue">
+                              <h6 class="card-title text-primary">Shipping Orders</h6>
                               <h1 class="card-text">{{ $orders_shipping }}</h1>
-                                {{-- <img src="{{asset('images/user-homepage.png')}}" class="card-image"> --}}
-                              <a href="#" class="card-link">view more</a>
+                              {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-4 pb-1 mb-4">
                         <div class="card">
-                            <div class="card-body">
-                              <h6 class="card-title">Returned Orders</h6>
-                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
+                            <div class="card-body border-custom-skyblue">
+                              <h6 class="card-title text-primary">Returned Orders</h6>
                               <h1 class="card-text">{{ $orders_returned }}</h1>
-                                {{-- <img src="{{asset('images/user-homepage.png')}}" class="card-image"> --}}
-                              <a href="#" class="card-link">view more</a>
+                              {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-4 pb-1 mb-4">
                         <div class="card">
-                            <div class="card-body">
-                              <h6 class="card-title">Deliverd Orders</h6>
-                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
+                            <div class="card-body border-custom-skyblue">
+                              <h6 class="card-title text-primary">Deliverd Orders</h6>
                               <h1 class="card-text">{{ $orders_delivered }}</h1>
-                                {{-- <img src="{{asset('images/user-homepage.png')}}" class="card-image"> --}}
-                              <a href="#" class="card-link">view more</a>
+                              {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
                             </div>
                         </div>
                     </div>
                     
                     <div class="col-md-4 pb-1 mb-4">
                         <div class="card">
-                            <div class="card-body">
-                              <h6 class="card-title">Canceled Orders</h6>
-                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
+                            <div class="card-body border-custom-skyblue">
+                              <h6 class="card-title text-primary">Canceled Orders</h6>
                               <h1 class="card-text">{{ $orders_canceled }}</h1>
-                              <a href="#" class="card-link">view more</a>
+                              {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
                             </div>
                         </div>
                     </div>
                   
                     <div class="col-md-4 pb-1 mb-4">
                         <div class="card">
-                            <div class="card-body">
-                              <h6 class="card-title">Best sellers</h6>
-                              {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
+                            <div class="card-body border-custom-skyblue">
+                              <h6 class="card-title text-primary">Best sellers</h6>
                               <h1 class="card-text">{{ $best_seller }}</h1>
-                              <a href="#" class="card-link">view more</a>
+                              {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
                             </div>
                         </div>
                     </div>
+
+
+                    
                 </div>
                 
             </div>
@@ -222,8 +213,8 @@
                 ],
                 datasets: [{
                     label: 'Sales',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'skyblue',
+                    borderColor: 'skyblue',
                     data: [
                         // 0, 10, 5, 2, 20, 30, 45
                         @foreach ($order_items as $order_item)

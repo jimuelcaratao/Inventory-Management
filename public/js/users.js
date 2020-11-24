@@ -29,7 +29,7 @@ $(document).ready(function() {
             var name = el.data('item-name');
             var email =el.data("item-email");
             var is_admin =el.data("item-is_admin");
-            var password =el.data("item-password");
+            // var password =el.data("item-password");
             var created_at = el.data('item-created_at');
             var updated_at = el.data('item-updated_at');
             var firstname =el.data("item-firstname");
@@ -49,7 +49,7 @@ $(document).ready(function() {
             $("#editUserID").val(id);
             $("#editUsername").val(name);
             $("#editEmail").val(email);
-            $("#editPassword").val(password);
+            // $("#editPassword").val(password);
             $("#editCreated").val(created_at);
             $("#editUpdated").val(updated_at);
             $("#editFirstname").val(firstname);

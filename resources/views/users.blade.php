@@ -213,10 +213,10 @@
               </div>
               <!-- /Account Type --> 
               <!-- Password --> 
-              <div class="form-group input-group-sm">
+              {{-- <div class="form-group input-group-sm">
                 <label class="col-form-label" for="editPassword">Password</label>
                 <input type="text" name="editPassword" class="form-control " id="editPassword" readonly >
-              </div>
+              </div> --}}
               <!-- /Password --> 
 
               <!-- First name --> 

@@ -212,6 +212,28 @@ table td {
     border-color: #b8b8b8;
 }
 
+/* borders */
+.border-custom-red {
+    border-radius: 1%;
+    border: 2px solid red;
+    border-top: 5px solid red;
+    margin: -1px;
+}
+
+.border-custom-skyblue {
+    border-radius: 1%;
+    border: 2px solid skyblue;
+    border-top: 5px solid skyblue;
+    margin: -1px;
+}
+
+.border-custom-green {
+    border-radius: 1%;
+    border: 2px solid green;
+    border-top: 5px solid green;
+    margin: -1px;
+}
+
 /* preloader */
 
 @media (max-width: 992px) {
