@@ -9,7 +9,6 @@ $(".delete-all").click(function(e) {
     }
 });
 
-
 //delete recort
 $(".delete-user").click(function(e) {
     e.preventDefault(); // Don't post the form, unless confirmed
@@ -20,7 +19,6 @@ $(".delete-user").click(function(e) {
             .submit(); // Post the surrounding form
     }
 });
-
 
 //edit modal orders
 $(document).ready(function() {
@@ -71,9 +69,6 @@ $(document).ready(function() {
         $("#edit-form").trigger("reset");
     });
 });
-
-
-
 
 //edit modal order reports
 $(document).ready(function() {
