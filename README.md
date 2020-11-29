@@ -1,15 +1,15 @@
-##Inventory Management Application
+## Inventory Management Application
 
 
-###To clone :
+### To clone :
 composer install - for dependencies
 
-###DB
+### DB
 create table- inventorydb
 u- root
 p- 
 
 php artisan migrate - all migration in db
 
-###packages
+### packages
 - https://github.com/LaravelDaily/laravel-invoices
