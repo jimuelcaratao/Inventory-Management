@@ -213,7 +213,7 @@
 
                                             <td>
                                             {{-- edit icon --}}
-                                            <a
+                                            {{-- <a
                                             class="float-left"
                                             data-target="edit-modal"
                                             data-toggle="modal"
@@ -228,16 +228,16 @@
                                             data-item-price="{{ $order_item->price }}"
                                             data-item-discount="{{ $order_item->discount }}"
                                             id="edit-item"
-                                            ><i class="fas fa-list icons"></i></a>
+                                            ><i class="fas fa-list icons"></i></a> --}}
                     
                                             {{-- delete icon --}}
-                                            {{-- <form method="POST" action="/orders/{{$order_item->order_item_id}}" class="float-left">
+                                            <form method="POST" action="/orders/{{$order_item->order_item_id}}" class="float-left">
                                                 @csrf
                                                 @method("DELETE")
                                                 <div class="form-group form-icon">
                                                 <i class="fas fa-trash-alt delete-user icons" type="submit"  data-tooltip="tooltip" data-placement="top" title="Delete"></i>
                                                 </div>
-                                            </form> --}}
+                                            </form>
                                             </td>
                                         </tr>
                                     @empty

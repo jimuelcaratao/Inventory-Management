@@ -15,14 +15,14 @@ class CreateCartItemsTable extends Migration
     {
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id('cart_item_id');
-            $table->string('transaction_no', 20);
+            $table->string('cart_id', 20);
             $table->string('barcode', 20);
             $table->string('quantity', 100);
             $table->string('price', 100);
             $table->timestamps();
 
             $table->foreign('barcode')->references('barcode')->on('products');
-            $table->foreign('transaction_no')->references('transaction_no')->on('carts');
+            $table->foreign('cart_id')->references('cart_id')->on('carts');
         });
     }
 

@@ -179,6 +179,7 @@ table th {
 table tr:hover {
     background-color: #fff;
     box-shadow: 5px 5px 10px #b4b4b4;
+    transition: 0.2s;
 }
 
 table th,
@@ -196,6 +197,11 @@ table td {
 }
 .img_logo {
     display: none;
+}
+/* card shadow */
+.card-shadow:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    transition: 0.2s;
 }
 
 /* custom button */
@@ -227,10 +233,10 @@ table td {
     margin: -1px;
 }
 
-.border-custom-green {
+.border-custom-darkblue {
     border-radius: 1%;
-    border: 2px solid green;
-    border-top: 5px solid green;
+    border: 2px solid #4d648d;
+    border-top: 5px solid #4d648d;
     margin: -1px;
 }
 

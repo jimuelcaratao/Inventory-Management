@@ -8,6 +8,7 @@ use App\Models\ProductPhoto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class ProductController extends Controller
@@ -244,6 +245,7 @@ class ProductController extends Controller
         // Product::destroy($barcode);
         DB::table('product_photos')->where('barcode',  $barcode)->delete();
         DB::table('products')->where('barcode', $barcode)->delete();
+        // Storage::delete($barcode . '_');
 
         return redirect('products')->with('success', 'Sucessfully Deleted!');
     }

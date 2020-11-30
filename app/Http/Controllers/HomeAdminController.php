@@ -13,7 +13,15 @@ use Illuminate\Support\Facades\Auth;
 class HomeAdminController extends Controller
 {
 
-
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Show the application dashboard.
      *
@@ -35,7 +43,12 @@ class HomeAdminController extends Controller
         $orders = DB::table('orders')
             ->get();
 
+        // $quarter = new \Carbon\Carbon('-3 months');
+        // $firstOfQuarter = $quarter->firstOfQuarter();
+        // $lastOfQuarter = $quarter->lastOfQuarter();
+
         $order_items = DB::table('order_items')
+            ->whereMonth('created_at', '=', Carbon::now()->month)
             ->latest()
             ->get();
 
@@ -55,7 +68,9 @@ class HomeAdminController extends Controller
             ->whereDate('created_at', Carbon::today())
             ->count();
 
-        $earned_month = DB::table('order_items')->sum('price');
+        $earned_month = DB::table('order_items')
+            ->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
+            ->sum('price');
 
         // identify time now
 
