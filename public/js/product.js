@@ -108,15 +108,24 @@ $(document).ready(function() {
         $.ajax({
             type: "GET",
             url: `/ProductImages?Id=${barcode}`,
+
             success: function(response) {
                 console.log(response.data);
 
                 let htmls = "";
+                x = null;
                 $("#image-container").html(null);
                 response.data.map(x => {
+                    var photo_id = x.product_photo_id;
+                    // console.log(photo_id);
                     let routeAsset = `http://127.0.0.1:8000/product_images/${x.barcode}_${x.photo}`;
                     $("#image-container").append(
-                        `<img class='swiper-slide border my-4 mx-2 d-block w-50' src='${routeAsset}' alt='${x.photo}' />`
+                        `<img class='swiper-slide border my-4 mx-2 d-block w-50' src='${routeAsset}' alt='${x.photo}' />` +
+                            `<form method='POST' action='/products/${x.product_photo_id}" class="float-left' id='form-id'>` +
+                            `<div class='form-group form-icon'>` +
+                            `<i class='fas fa-times icons' id='your-id' type='submit'  data-tooltip='tooltip' data-placement='top' title='Delete' value='submit'></i>` +
+                            `</div>` +
+                            `</form>`
                     );
                 });
             }
@@ -181,6 +190,21 @@ $(document).ready(function() {
 //delete
 $(".delete-user").click(function(e) {
     e.preventDefault(); // Don't post the form, unless confirmed
+    if (confirm("Are you sure?")) {
+        // Post the form
+        $(e.target)
+            .closest("form")
+            .submit(); // Post the surrounding form
+    }
+});
+var form = document.getElementById("form-id");
+
+document.getElementById("your-id").addEventListener("click", function() {
+    form.submit();
+});
+
+//delete
+$(".delete-photo").click(function(e) {
     if (confirm("Are you sure?")) {
         // Post the form
         $(e.target)

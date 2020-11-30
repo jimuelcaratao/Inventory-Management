@@ -41,13 +41,16 @@ class AnalyticController extends Controller
         // sales
         $order_items = DB::table('order_items')
             ->whereBetween('created_at', [request()->sales_from, request()->sales_to])
+            ->orderBy('created_at')
             ->get();
         if (!empty(request()->sales_from)  ||  !empty(request()->sales_to)) {
             $order_items = DB::table('order_items')
                 ->whereBetween('created_at', [request()->sales_from, request()->sales_to])
+                ->orderBy('created_at')
                 ->get();
         } else {
             $order_items = DB::table('order_items')
+                ->orderBy('created_at')
                 ->get();
         }
 
@@ -77,6 +80,10 @@ class AnalyticController extends Controller
                 ->count();
         }
 
+        // total invoices
+        $total_invoices = DB::table('invoices')
+            ->count();
+
 
         // best seller
         $best_seller = DB::table('order_items')
@@ -105,18 +112,47 @@ class AnalyticController extends Controller
             ->where('status', 'Returned')
             ->count();
 
+        // active supplier
+        $active_supplier = DB::table('suppliers')
+            ->where('status', 'Active')
+            ->count();
+
+        // inactive supplier
+        $inactive_supplier = DB::table('suppliers')
+            ->where('status', 'Inactive')
+            ->count();
+
+        //earned this month
+        $earned_this = DB::table('order_items')
+            ->whereMonth('created_at', '=', Carbon::now()->month)
+            ->sum('price');
+
+        //earned last month
+        $earned_last = DB::table('order_items')
+            ->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
+            ->sum('price');
+
+        //earned last month
+        $earned_all = DB::table('order_items')
+            ->sum('price');
+
         return view('analytics', [
             'users' => $users,
             'order_items' => $order_items,
             'new_products' => $new_products,
             'new_users' => $new_users,
+            'total_invoices' => $total_invoices,
             'orders_count' => $orders_count,
             'best_seller' => $best_seller,
             'orders_canceled' => $orders_canceled,
             'orders_delivered' => $orders_delivered,
             'orders_shipping' => $orders_shipping,
             'orders_returned' => $orders_returned,
-
+            'active_supplier' => $active_supplier,
+            'inactive_supplier' => $inactive_supplier,
+            'earned_this' => $earned_this,
+            'earned_last' => $earned_last,
+            'earned_all' => $earned_all,
 
         ]);
     }

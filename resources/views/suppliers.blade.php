@@ -76,7 +76,7 @@
 
                     @forelse ($suppliers as $supplier)
                         <div class="col-md-auto align-self-start py-2">
-                            <div class="card card-user" style="width: 13rem;">
+                            <div class="card card-user card-shadow" style="width: 13rem;">
                                 <div class="card-body">
                                 <h5 class="card-title">{{$supplier->status}}</h5>
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}

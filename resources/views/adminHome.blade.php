@@ -47,7 +47,7 @@
            
                 <div class="row py-4">
                     <div class="col pb-1">
-                        <div class="card" style="width: 15rem;">
+                        <div class="card card-shadow" style="width: 15rem;">
                             <div class="card-body card_border">
                                 <h5 class="card-title">Active Users</h5>
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
@@ -59,7 +59,7 @@
                     </div>
                     
                     <div class="col pb-1">
-                        <div class="card" style="width: 15rem;">
+                        <div class="card card-shadow" style="width: 15rem;">
                             <div class="card-body card_border">
                                 <h5 class="card-title">Products</h5>
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="col pb-1">
-                        <div class="card" style="width: 15rem;">
+                        <div class="card card-shadow" style="width: 15rem;">
                             <div class="card-body card_border">
                                 <h5 class="card-title">Orders Today</h5>
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
@@ -86,16 +86,16 @@
                 </div>
                 <div class="row py-4" >
                     <div class="col col-lg-4  pb-1 ">
-                        <div class="card mb-4 " style="width: 15rem;">
-                            <div class="card-body">
+                        <div class="card card-shadow mb-4 " style="width: 15rem;">
+                            <div class="card-body card_border">
                                 <h5 class="card-title">Earned last month</h5>
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
                                 <h1 class="card-text">₱{{ $earned_month }}</h1>
                                 <a href="{{ URL::to('analytics') }}" class="card-link">view more</a>
                             </div>
                         </div>
-                        <div class="card mb-2" style="width: 15rem;">
-                            <div class="card-body">
+                        <div class="card card-shadow mb-2" style="width: 15rem;">
+                            <div class="card-body card_border">
                                 <h5 class="card-title">Low in Stock Items</h5>
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
                                 <h1 class="card-text">{{ $products_count_low }}</h1>
@@ -105,7 +105,7 @@
                     </div>
                     
                     <div class="col col-lg-8  pb-1">
-                        <div class="card" style="width: 100%;">
+                        <div class="card card-shadow" style="width: 100%;">
                             <div class="card-body">
                               <h5 class="card-title">Earning summary</h5>
                               {{-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> --}}
@@ -142,7 +142,7 @@
         window.onload = function () {
             var chart = new CanvasJS.Chart("chartContainer", {
             title:{
-                text: "Quarterly Revenue Analysis"
+                text: "Monthly Revenue Analysis"
             },
             axisY:[{
                 title: "Supplies",

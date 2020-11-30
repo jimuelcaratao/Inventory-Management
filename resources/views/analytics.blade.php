@@ -43,7 +43,7 @@
                 </div>
            
                 <div class="row py-4">
-                    <div class="card w-100">
+                    <div class="card w-100 card-shadow">
                         <div class="card-header bg-white shadow-sm">
                             <div class="header text-primary">
                                 <h3>Sales analysis</h3>
@@ -72,15 +72,58 @@
                 </div>
 
                 <div class="row my-4" >
-                    <h3>Cards</h3>
+                    <h3>Sales</h3>
+                </div>
+
+                {{-- cards --}}
+                <div class="row py-4">
+
+                    <div class="col-md-4 pb-1 mb-4">
+                        <div class="card card-shadow">
+                            <div class="card-body border-custom-darkblue">
+                                <h6 class="card-title text-primary">Earned last month</h6>
+                                <h1 class="card-text">₱{{ $earned_last }}</h1>
+                                {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 pb-1 mb-4">
+                        <div class="card card-shadow">
+                            <div class="card-body border-custom-darkblue">
+                                <h6 class="card-title text-primary">Earned this month</h6>
+                                @if ($earned_this >= $earned_last)
+                                    <img src="{{asset('images/increase.png')}}" class="card-image float-right mr-3" width="35px" title="Revenue Increase">
+                                @else
+                                    <img src="{{asset('images/decreas.png')}}" class="card-image float-right mr-3" width="35px" title="Revenue Decrease">
+                                @endif
+                                <h1 class="card-text">₱{{ $earned_this }}</h1>
+                                {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 pb-1 mb-4">
+                        <div class="card card-shadow">
+                            <div class="card-body border-custom-darkblue">
+                                <h6 class="card-title text-primary">Total Revenue</h6>
+                                <h1 class="card-text">₱{{ $earned_all }}</h1>
+                                {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row my-4" >
+                    <h3>Others</h3>
                 </div>
 
 
                 <div class="row py-4">
                     {{-- New products --}}
                     <div class="col-md-6 pb-1">
-                        <div class="card " >
-                            <div class="card-body border-custom-skyblue">
+                        <div class="card card-shadow" >
+                            <div class="card-body border-custom-darkblue">
                               <h5 class="card-title text-primary">Products Added</h5>
                               <form action="/analytics" method="GET" id="datePickerProducts" class="form-inline col align-self-end">
                                     <label for="product_month ">Month:</label>
@@ -100,8 +143,8 @@
 
                     {{-- TBA --}}
                     <div class="col-md-6 pb-1">
-                        <div class="card" >
-                            <div class="card-body border-custom-skyblue">
+                        <div class="card card-shadow" >
+                            <div class="card-body border-custom-darkblue">
                               <h5 class="card-title text-primary">New Users</h5>
                               <form action="/analytics" method="GET" id="datePickerProducts" class="form-inline col align-self-end">
                                     <label for="user_month ">Month:</label>
@@ -122,10 +165,20 @@
 
                 {{-- cards --}}
                 <div class="row py-4">
+
+                    <div class="col-md-4 pb-1 mb-4">
+                        <div class="card card-shadow">
+                            <div class="card-body border-custom-darkblue">
+                              <h6 class="card-title text-primary">Total invoices</h6>
+                              <h1 class="card-text">{{ $total_invoices }}</h1>
+                              {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="col-md-4 pb-1 mb-4">
-                        <div class="card">
-                            <div class="card-body border-custom-skyblue">
+                        <div class="card card-shadow">
+                            <div class="card-body border-custom-darkblue">
                               <h6 class="card-title text-primary">Total Orders</h6>
                               <h1 class="card-text">{{ $orders_count }}</h1>
                               {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
@@ -133,8 +186,8 @@
                         </div>
                     </div>
                     <div class="col-md-4 pb-1 mb-4">
-                        <div class="card">
-                            <div class="card-body border-custom-skyblue">
+                        <div class="card card-shadow">
+                            <div class="card-body border-custom-darkblue">
                               <h6 class="card-title text-primary">Shipping Orders</h6>
                               <h1 class="card-text">{{ $orders_shipping }}</h1>
                               {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
@@ -143,8 +196,8 @@
                     </div>
 
                     <div class="col-md-4 pb-1 mb-4">
-                        <div class="card">
-                            <div class="card-body border-custom-skyblue">
+                        <div class="card card-shadow">
+                            <div class="card-body border-custom-darkblue">
                               <h6 class="card-title text-primary">Returned Orders</h6>
                               <h1 class="card-text">{{ $orders_returned }}</h1>
                               {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
@@ -153,9 +206,9 @@
                     </div>
 
                     <div class="col-md-4 pb-1 mb-4">
-                        <div class="card">
-                            <div class="card-body border-custom-skyblue">
-                              <h6 class="card-title text-primary">Deliverd Orders</h6>
+                        <div class="card card-shadow">
+                            <div class="card-body border-custom-darkblue">
+                              <h6 class="card-title text-primary">Delivered Orders</h6>
                               <h1 class="card-text">{{ $orders_delivered }}</h1>
                               {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
                             </div>
@@ -163,8 +216,8 @@
                     </div>
                     
                     <div class="col-md-4 pb-1 mb-4">
-                        <div class="card">
-                            <div class="card-body border-custom-skyblue">
+                        <div class="card card-shadow">
+                            <div class="card-body border-custom-darkblue">
                               <h6 class="card-title text-primary">Canceled Orders</h6>
                               <h1 class="card-text">{{ $orders_canceled }}</h1>
                               {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
@@ -173,8 +226,8 @@
                     </div>
                   
                     <div class="col-md-4 pb-1 mb-4">
-                        <div class="card">
-                            <div class="card-body border-custom-skyblue">
+                        <div class="card card-shadow">
+                            <div class="card-body border-custom-darkblue">
                               <h6 class="card-title text-primary">Best sellers</h6>
                               <h1 class="card-text">{{ $best_seller }}</h1>
                               {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
@@ -182,7 +235,25 @@
                         </div>
                     </div>
 
+                    <div class="col-md-4 pb-1 mb-4">
+                        <div class="card card-shadow">
+                            <div class="card-body border-custom-darkblue">
+                              <h6 class="card-title text-primary">Active suppliers</h6>
+                              <h1 class="card-text">{{ $active_supplier }}</h1>
+                              {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="col-md-4 pb-1 mb-4">
+                        <div class="card card-shadow">
+                            <div class="card-body border-custom-darkblue">
+                              <h6 class="card-title text-primary">Inactive suppliers</h6>
+                              <h1 class="card-text">{{ $inactive_supplier }}</h1>
+                              {{-- <a href="{{ URL::to('orders') }}" class="card-link">view more</a> --}}
+                            </div>
+                        </div>
+                    </div>
                     
                 </div>
                 
@@ -213,8 +284,8 @@
                 ],
                 datasets: [{
                     label: 'Sales',
-                    backgroundColor: 'skyblue',
-                    borderColor: 'skyblue',
+                    backgroundColor: '#4d648d',
+                    borderColor: '#4d648d',
                     data: [
                         // 0, 10, 5, 2, 20, 30, 45
                         @foreach ($order_items as $order_item)

@@ -383,47 +383,15 @@
               {{ method_field('PUT') }}
               <div class="card text-dark bg-light mb-0">
                 <div class="card-body">
+
+
                   {{-- Display images --}}
+
                     <!-- Swiper -->
                     <div class="swiper-container h-100">
-
                       <div class="swiper-wrapper" id="image-container">
-                        {{-- <div class="swiper-slide">Slide 1</div>
-                        <div class="swiper-slide">Slide 2</div>
-                        <div class="swiper-slide">Slide 3</div>
-                        <div class="swiper-slide">Slide 4</div>
-                        <div class="swiper-slide">Slide 5</div>
-                        <div class="swiper-slide">Slide 6</div>
-                        <div class="swiper-slide">Slide 7</div>
-                        <div class="swiper-slide">Slide 8</div>
-                        <div class="swiper-slide">Slide 9</div>
-                        <div class="swiper-slide">Slide 10</div> --}}
                       </div>
                     </div>
-
-
-
-                    {{-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                      <div class="carousel-inner" id="image-container">
-                        <div class="carousel-item active">
-                          <img src="{{  asset('product_images/1111cc_fb-dp-HJM.png') }}" class="rounded mx-auto d-block w-50" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                          <img src="{{  asset('product_images/1111cc_hjm-mockup.jpg') }}" class="d-block w-50" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                          <img src="{{  asset('product_images/1111cc_fb-dp-HJM.png') }}" class="d-block w-50" alt="...">
-                        </div>
-                      </div>
-                      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </div> --}}
                   
                     {{-- Images Input --}}
                     <div class="form-group input-group-sm">
