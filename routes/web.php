@@ -61,6 +61,9 @@ Route::resource('/analytics', AnalyticController::class);
 
 Route::resource('/users', UserController::class);
 
+Route::resource('/product_photo', ProductPhoto::class);
+
+
 // Route::resource([
 //     '/products', ProductController::class,
 // ]);
@@ -106,4 +109,9 @@ Route::get('/ProductImages', function (Request $request) {
         ProductPhoto::where('barcode', $request->Id)
             ->get()
     );
+});
+
+Route::get('/ProductImages/delete', function (Request $request) {
+    ProductPhoto::where('product_photo_id', $request->Id)
+        ->delete();
 });

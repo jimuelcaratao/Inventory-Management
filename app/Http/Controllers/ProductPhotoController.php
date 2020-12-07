@@ -78,8 +78,9 @@ class ProductPhotoController extends Controller
      * @param  \App\Models\ProductPhoto  $productPhoto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductPhoto $productPhoto)
+    public function destroy($product_photo_id)
     {
-        //
+        ProductPhoto::where('product_photo_id', $product_photo_id)
+            ->delete();
     }
 }

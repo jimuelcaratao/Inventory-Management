@@ -115,7 +115,6 @@
    </div>
  </div>
 
-
             {{-- <img src="data:image/png;base64,{{ chunk_split(base64_encode($productPhoto->photo)) }}" height="100" width="100"> --}}
               {{-- tables --}}
                 <div class="table-container" id="table-container">
@@ -390,6 +389,8 @@
                     <!-- Swiper -->
                     <div class="swiper-container h-100">
                       <div class="swiper-wrapper" id="image-container">
+                        @csrf
+                        @method("DELETE")
                       </div>
                     </div>
                   

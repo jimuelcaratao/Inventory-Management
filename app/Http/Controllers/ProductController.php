@@ -50,6 +50,8 @@ class ProductController extends Controller
             ->get();
 
 
+
+
         $tableProducts = Product::all();
 
         if ($tableProducts->isEmpty()) {
@@ -93,7 +95,22 @@ class ProductController extends Controller
                     ->paginate(10, ['*'], 'products');
             }
         }
-        return view('products', ['users' => $users, 'products' => $products,  'categories' => $categories, 'brands' => $brands]);
+
+        $product_data = DB::table('order_items')->sum(DB::raw('price * quantity'));
+
+        // foreach ($product_data as $product_item) {
+        //     $product_item->quantity * $product_item->price;
+        // }
+        // $product_item->sum();
+        // var_dump($product_item);
+
+        return view('products', [
+            'users' => $users,
+            'products' => $products,
+            'categories' => $categories,
+            'brands' => $brands,
+            'product_data' => $product_data,
+        ]);
     }
 
     /**
