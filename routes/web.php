@@ -111,7 +111,7 @@ Route::get('/ProductImages', function (Request $request) {
     );
 });
 
-Route::get('/ProductImages/delete', function (Request $request) {
-    ProductPhoto::where('product_photo_id', $request->Id)
-        ->delete();
-});
+// Route::get('/ProductImages/delete', function (Request $request) {
+//     ProductPhoto::where('product_photo_id', $request->Id)
+//         ->delete();
+// });

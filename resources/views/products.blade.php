@@ -508,6 +508,123 @@
       },
     });
 
+    //edit modal
+
+$(document).ready(function() {
+    $("#editsearch").on("submit", function() {
+        var id = $("/products/" + "#modal-input-id").val();
+        var formAction = $("#editsearch").attr("action");
+        $("#editsearch").attr("action", formAction + id);
+    });
+    /**
+     * for showing edit item popup
+     */
+    $(document).on("click", "#edit-item", function() {
+        $(this).addClass("edit-item-trigger-clicked"); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
+
+        var options = {
+            backdrop: "static"
+        };
+
+        $("#edit-modal").modal(options);
+    });
+
+    // on modal show
+    $("#edit-modal").on("show.bs.modal", function() {
+        var el = $(".edit-item-trigger-clicked"); // See how its usefull right here?
+        var row = el.closest(".data-row");
+
+        // get the data
+        var sku = el.data("item-sku");
+        var barcode = el.data("item-barcode");
+        var barcodeImg = el.data("item-barcode");
+        var productname = el.data("item-productname");
+        var description = el.data("item-description");
+        var specs = el.data("item-specs");
+        var category = el.data("item-category");
+        var brand = el.data("item-brand");
+        var stock = el.data("item-stock");
+        var price = el.data("item-price");
+        // var barcodeImg = { json_encode($barcode, JSON_HEX_TAG) };
+
+        // var description = row.children("item-email").text();
+
+        // fill the data in the input fields
+        $("#editSKU").val(sku);
+        $("#editBarcode").val(barcode);
+        $("#barcodeImg").val(barcodeImg);
+        $("#editProductName").val(productname);
+        $("#editDescription").val(description);
+        $("#editSpecs").val(specs);
+        $("#editCategory").val(category);
+        $("#editBrand").val(brand);
+        $("#editStock").val(stock);
+        $("#editPrice").val(price);
+
+        $.ajax({
+            type: "GET",
+            url: `/ProductImages?Id=${barcode}`,
+
+            success: function(response) {
+                console.log(response.data);
+
+                let htmls = "";
+                x = null;
+                $("#image-container").html(null);
+                response.data.map(x => {
+                    var photo_id = x.product_photo_id;
+                    // console.log(photo_id);
+                    let routeAsset = `http://127.0.0.1:8000/product_images/${x.barcode}_${x.photo}`;
+                    $("#image-container").append(
+                        `<img class='swiper-slide border my-4 mx-2 d-block w-50' src='${routeAsset}' alt='${x.photo}' />` +
+                            `<form method='POST' action='/product_photo/${x.product_photo_id}' >` +
+                            '@csrf'+
+                            '@method("DELETE")'+
+                            `<div class='form-group'>` +
+                            `<button class='btn btn-danger submit_btn'  type='submit'>X</button` +
+                            `</div>` +
+                            `</form>`
+                    );
+                });
+            }
+        });
+
+        // $("#btn_sad").click(function(e) {
+        //     e.preventDefault();
+        //     $.ajax({
+        //         type: "DELETE",
+        //         url: `/product_photo/${x.product_photo_id}`,
+
+        //         success: function(result) {
+        //             alert("ok");
+        //         }
+        //     });
+        // });
+    });
+
+    // $(".submit_btn").click(function(e) {
+    //     e.preventDefault(); // Don't post the form, unless confirmed
+    //     $.ajax({
+    //         type: `GET`,
+    //         url: `/ProductImages/delete?Id=${product_photo_id}`,
+
+    //         success: function(response) {
+    //             console.log(response.data);
+    //             x = null;
+    //         }
+    //     });
+    //     console.log("clik");
+    // });
+
+    // on modal hide
+    $("#edit-modal").on("hide.bs.modal", function() {
+        $(".edit-item-trigger-clicked").removeClass(
+            "edit-item-trigger-clicked"
+        );
+        $("#edit-form").trigger("reset");
+    });
+});
+
     </script>
 @endpush
 @endsection

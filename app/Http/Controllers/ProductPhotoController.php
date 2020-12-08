@@ -35,7 +35,7 @@ class ProductPhotoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect('products')->with('success', 'Sucessfully Deleted image!');
     }
 
     /**
@@ -80,7 +80,8 @@ class ProductPhotoController extends Controller
      */
     public function destroy($product_photo_id)
     {
-        ProductPhoto::where('product_photo_id', $product_photo_id)
-            ->delete();
+        // ProductPhoto::where('product_photo_id', $product_photo_id)
+        //     ->delete();
+        // return redirect('products')->with('success', 'Sucessfully Deleted image!');
     }
 }
