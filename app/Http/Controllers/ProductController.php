@@ -260,9 +260,20 @@ class ProductController extends Controller
     public function destroy($barcode)
     {
         // Product::destroy($barcode);
+
+        // Storage::delete($barcode . '_');
+
         DB::table('product_photos')->where('barcode',  $barcode)->delete();
         DB::table('products')->where('barcode', $barcode)->delete();
-        // Storage::delete($barcode . '_');
+
+        return redirect('products')->with('success', 'Sucessfully Deleted!');
+    }
+
+    public function destroyPhoto($product_photo_id)
+    {
+
+        ProductPhoto::where('product_photo_id', $product_photo_id)
+            ->delete();
 
         return redirect('products')->with('success', 'Sucessfully Deleted!');
     }

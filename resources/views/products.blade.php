@@ -577,7 +577,8 @@ $(document).ready(function() {
                     let routeAsset = `http://127.0.0.1:8000/product_images/${x.barcode}_${x.photo}`;
                     $("#image-container").append(
                         `<img class='swiper-slide border my-4 mx-2 d-block w-50' src='${routeAsset}' alt='${x.photo}' />` +
-                            `<form method='POST' action='/product_photo/${x.product_photo_id}' >` +
+                            // `<form method='POST' action='/product_photo/${x.product_photo_id}' >` +
+                            `<form method='POST' action='/products-photo/${x.product_photo_id}' >` +
                             '@csrf'+
                             '@method("DELETE")'+
                             `<div class='form-group'>` +
