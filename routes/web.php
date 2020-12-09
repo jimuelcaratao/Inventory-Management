@@ -61,6 +61,9 @@ Route::resource('/analytics', AnalyticController::class);
 
 Route::resource('/users', UserController::class);
 
+// Route::resource('/product_photo', ProductPhoto::class);
+
+
 // Route::resource([
 //     '/products', ProductController::class,
 // ]);
@@ -94,6 +97,11 @@ Route::get('/analytics', [App\Http\Controllers\AnalyticController::class, 'index
 
 Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users')->middleware('is_admin');
 
+Route::delete('/products-photo/{product_photo_id}', [ProductController::class, 'destroyPhoto'])->name('photo_delete')->middleware('is_admin');
+
+// Route::delete('users/{id}', function ($id) {
+// });
+
 // Resources
 
 //  Route::resource('product', CategoryController::class)->only([
@@ -107,3 +115,8 @@ Route::get('/ProductImages', function (Request $request) {
             ->get()
     );
 });
+
+// Route::get('/ProductImages/delete', function (Request $request) {
+//     ProductPhoto::where('product_photo_id', $request->Id)
+//         ->delete();
+// });

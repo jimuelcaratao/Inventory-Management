@@ -52,136 +52,6 @@ $(document).ready(function() {
     });
 });
 
-//edit modal
-
-$(document).ready(function() {
-    $("#editsearch").on("submit", function() {
-        var id = $("/products/" + "#modal-input-id").val();
-        var formAction = $("#editsearch").attr("action");
-        $("#editsearch").attr("action", formAction + id);
-    });
-    /**
-     * for showing edit item popup
-     */
-    $(document).on("click", "#edit-item", function() {
-        $(this).addClass("edit-item-trigger-clicked"); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
-
-        var options = {
-            backdrop: "static"
-        };
-
-        $("#edit-modal").modal(options);
-    });
-
-    // on modal show
-    $("#edit-modal").on("show.bs.modal", function() {
-        var el = $(".edit-item-trigger-clicked"); // See how its usefull right here?
-        var row = el.closest(".data-row");
-
-        // get the data
-        var sku = el.data("item-sku");
-        var barcode = el.data("item-barcode");
-        var barcodeImg = el.data("item-barcode");
-        var productname = el.data("item-productname");
-        var description = el.data("item-description");
-        var specs = el.data("item-specs");
-        var category = el.data("item-category");
-        var brand = el.data("item-brand");
-        var stock = el.data("item-stock");
-        var price = el.data("item-price");
-        // var barcodeImg = { json_encode($barcode, JSON_HEX_TAG) };
-
-        // var description = row.children("item-email").text();
-
-        // fill the data in the input fields
-        $("#editSKU").val(sku);
-        $("#editBarcode").val(barcode);
-        $("#barcodeImg").val(barcodeImg);
-        $("#editProductName").val(productname);
-        $("#editDescription").val(description);
-        $("#editSpecs").val(specs);
-        $("#editCategory").val(category);
-        $("#editBrand").val(brand);
-        $("#editStock").val(stock);
-        $("#editPrice").val(price);
-
-        $.ajax({
-            type: "GET",
-            url: `/ProductImages?Id=${barcode}`,
-
-            success: function(response) {
-                console.log(response.data);
-
-                let htmls = "";
-                x = null;
-                $("#image-container").html(null);
-                response.data.map(x => {
-                    var photo_id = x.product_photo_id;
-                    // console.log(photo_id);
-                    let routeAsset = `http://127.0.0.1:8000/product_images/${x.barcode}_${x.photo}`;
-                    $("#image-container").append(
-                        `<img class='swiper-slide border my-4 mx-2 d-block w-50' src='${routeAsset}' alt='${x.photo}' />` +
-                            `<form method='POST' action='/products/${x.product_photo_id}" class="float-left' id='form-id'>` +
-                            `<div class='form-group form-icon'>` +
-                            `<i class='fas fa-times icons' id='your-id' type='submit'  data-tooltip='tooltip' data-placement='top' title='Delete' value='submit'></i>` +
-                            `</div>` +
-                            `</form>`
-                    );
-                });
-            }
-        });
-
-        //   $(function(){
-        //     $('#edit-item').click(function() {
-
-        //       var imgName = barcode+".png";
-        //       var sad = "http://127.0.0.1:8000/product_images/"+barcode+"_fb-dp-HJM.png"
-
-        //       // var imgNames = "{{ asset('product_images/"+barcode+"'_'. $productPhoto->photo) }}"
-        //       $("#displays_ava").attr("src",imgNames);
-        //     });
-        //  });
-
-        //   $(function(){
-        //     $('#edit-item').click(function() {
-        //       $.ajax({
-        //         type: "POST",
-        //         url: '/products', // This is what I have updated
-        //         data: { id: barcode }
-        //       }).done(function( msg ) {
-        //           alert( msg );
-        //           console.log(msg)
-        //       });
-        //     });
-        //  });
-
-        // var data = { value : barcode };
-        // $.ajax({
-        //   type: "POST",
-        //   url: "{{ route('products') }}",
-        //   data: data,
-        //   headers: {
-        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //   },
-        //   success: function() {
-        //     console.log("Value added " + value);
-        //   }
-        // });
-
-        // $('.display').append(barcode);
-
-        // $('.display').append('<img src="{{ asset("product_images/"'+ barcode +'"_" ". $productPhoto->photo") }}" />');
-    });
-
-    // on modal hide
-    $("#edit-modal").on("hide.bs.modal", function() {
-        $(".edit-item-trigger-clicked").removeClass(
-            "edit-item-trigger-clicked"
-        );
-        $("#edit-form").trigger("reset");
-    });
-});
-
 //tooltip
 $(document).ready(function() {
     $('[data-tooltip="tooltip"]').tooltip();
@@ -197,21 +67,36 @@ $(".delete-user").click(function(e) {
             .submit(); // Post the surrounding form
     }
 });
-var form = document.getElementById("form-id");
 
-document.getElementById("your-id").addEventListener("click", function() {
-    form.submit();
-});
+// $(".delete-photo").click(function(e) {
+//     e.preventDefault(); // Don't post the form, unless confirmed
+//     $.ajax({
+//         type: `GET`,
+//         url: `/ProductImages/delete?Id=${barcode}`,
 
-//delete
-$(".delete-photo").click(function(e) {
-    if (confirm("Are you sure?")) {
-        // Post the form
-        $(e.target)
-            .closest("form")
-            .submit(); // Post the surrounding form
-    }
-});
+//         success: function(response) {
+//             console.log(response.data);
+//             x = null;
+//         }
+//     });
+// });
+
+// this is the id of the form
+// $("#idForm").submit(function(e) {
+//     e.preventDefault(); // avoid to execute the actual submit of the form.
+
+//     var form = $(this);
+//     var url = form.attr(`/ProductImages/delete?Id=${barcode}`);
+
+//     $.ajax({
+//         type: `POST`,
+//         url: url,
+//         data: form.serialize(), // serializes the form's elements.
+//         success: function(data) {
+//             alert(data); // show response from the php script.
+//         }
+//     });
+// });
 
 $(document).on("click", "#btnGetItem", async () => {
     let response = await fetch("https://jsonplaceholder.typicode.com/todos/1");

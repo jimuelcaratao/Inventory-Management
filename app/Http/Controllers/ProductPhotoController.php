@@ -35,7 +35,6 @@ class ProductPhotoController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -78,8 +77,7 @@ class ProductPhotoController extends Controller
      * @param  \App\Models\ProductPhoto  $productPhoto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductPhoto $productPhoto)
+    public function destroy($product_photo_id)
     {
-        //
     }
 }
