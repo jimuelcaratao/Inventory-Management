@@ -13,3 +13,4 @@ php artisan migrate - all migration in db
 
 ### packages
 - https://github.com/LaravelDaily/laravel-invoices
+- composer require intervention/image
