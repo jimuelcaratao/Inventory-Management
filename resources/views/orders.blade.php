@@ -136,8 +136,7 @@
             </div>
 
             {{-- migrate to invoice --}}
-            <div class="row justify-content-center">
-              <div class="col-md-8 d-flex justify-content-end" >
+            <div class="row justify-content-end">
                 <div class="pagination">
                     <form method="POST" action="{{ route('orders.store') }}" class="float-left">
                       @csrf
@@ -147,7 +146,6 @@
                       </div>
                   </form>
                 </div>
-              </div>
           </div>
 
             <div class="row justify-content-center">

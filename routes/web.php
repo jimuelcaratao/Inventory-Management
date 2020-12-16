@@ -99,6 +99,8 @@ Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->nam
 
 Route::delete('/products-photo/{product_photo_id}', [ProductController::class, 'destroyPhoto'])->name('photo_delete')->middleware('is_admin');
 
+Route::get('/invoice-print/{invoice_id}', [App\Http\Controllers\InvoiceController::class, 'show'])->name('invoice_print')->middleware('is_admin');
+
 // Route::delete('users/{id}', function ($id) {
 // });
 

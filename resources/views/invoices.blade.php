@@ -85,7 +85,7 @@
                                     <th>Status</th>
                                     <th>Shipped date</th>
                                     <th>Arriving date</th>
-                                    <th colspan="2">Action</th>
+                                    <th colspan="3">Action</th>
                                 </tr>
                               </thead>  
                                 @forelse ($invoices as $invoice)
@@ -112,15 +112,27 @@
                                       data-item-arrived="{{ $invoice->arriving_date }}"
                                       id="edit-item"
                                       ><i class="fas fa-list icons"></i></a>
-            
+
+                                      {{-- Print icon --}}
+                                      <form method="POST" action="/invoice-print/{{$invoice->invoice_id}}" class="float-left" target="_blank">
+                                        {{-- @csrf --}}
+                                        @method("GET")
+                                        <div class="form-group form-icon">
+                                          <i class="fas fa-print  print-invoice icons" type="submit"  data-tooltip="tooltip" title="Print"></i>
+                                        </div>
+                                      </form>
+
                                       {{-- delete icon --}}
                                       <form method="POST" action="/invoices/{{$invoice->invoice_id}}" class="float-left">
                                         @csrf
                                         @method("DELETE")
                                         <div class="form-group form-icon">
-                                          <i class="fas fa-trash-alt delete-user icons" type="submit"  data-tooltip="tooltip" data-placement="top" title="Delete"></i>
+                                          <i class="fas fa-trash-alt delete-user icons" type="submit"  data-tooltip="tooltip" title="Delete"></i>
                                         </div>
                                       </form>
+
+                                    
+                                      
                                     </td>
                                 </tr>
                                     @empty
@@ -224,6 +236,93 @@
     $("#element").fadeTo(2000, 500).slideUp(500, function(){
         $("#element").slideUp(500);
     });
+
+// Print
+
+$(document).ready(function() {
+  /**
+* for showing edit item popup
+  */
+  $(document).on('click', "#print-item", function() {
+  $(this).addClass('print-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
+
+      var options = {
+      'backdrop': 'static'
+      };
+      $('#print-modal').modal(options)
+
+  })
+
+  // on modal show
+  $('#print-modal').on('show.bs.modal', function() {
+      var el = $(".print-item-trigger-clicked"); // See how its usefull right here? 
+      var row = el.closest(".data-row");
+
+      // get the data
+      var transac = el.data('item-id');
+      var userid = el.data('item-user');
+      var status =el.data("item-status");
+      var ship =el.data("item-shipped");
+      var arrive =el.data("item-arrived");
+
+      console.log(transac)
+
+  })
+})
+
+
+//edit modal
+$(document).ready(function() {
+
+$('#editsearch').on('submit', function() {
+    var id = $('/invoices/'+'#modal-input-id').val();
+    var formAction = $('#editsearch').attr('action');
+    $('#editsearch').attr('action', formAction + id);
+});
+  /**
+* for showing edit item popup
+  */
+  $(document).on('click', "#edit-item", function() {
+  $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
+
+      var options = {
+      'backdrop': 'static'
+      };
+      $('#edit-modal').modal(options)
+  })
+
+  // on modal show
+  $('#edit-modal').on('show.bs.modal', function() {
+      var el = $(".edit-item-trigger-clicked"); // See how its usefull right here? 
+      var row = el.closest(".data-row");
+
+      // get the data
+      var transac = el.data('item-id');
+      var userid = el.data('item-user');
+      var status =el.data("item-status");
+      var ship =el.data("item-shipped");
+      var arrive =el.data("item-arrived");
+
+
+  // var description = row.children("item-email").text();
+
+      // fill the data in the input fields
+      $("#editTransactionNo").val(transac);
+      $("#editUserID").val(userid);
+      $("#editStatus").val(status);
+      $("#editShippedDate").val(ship);
+      $("#editArrivedDate").val(arrive);
+
+  })
+
+    // on modal hide
+    $('#edit-modal').on('hide.bs.modal', function() {
+        $('.edit-item-trigger-clicked').removeClass('edit-item-trigger-clicked')
+        $("#edit-form").trigger("reset");
+    })
+})
+
+
 
   </script>
 @endpush

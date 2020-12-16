@@ -96,7 +96,6 @@ class ProductController extends Controller
             }
         }
 
-        $product_data = DB::table('order_items')->sum(DB::raw('price * quantity'));
 
         // foreach ($product_data as $product_item) {
         //     $product_item->quantity * $product_item->price;
@@ -109,7 +108,6 @@ class ProductController extends Controller
             'products' => $products,
             'categories' => $categories,
             'brands' => $brands,
-            'product_data' => $product_data,
         ]);
     }
 
@@ -275,6 +273,6 @@ class ProductController extends Controller
         ProductPhoto::where('product_photo_id', $product_photo_id)
             ->delete();
 
-        return redirect('products')->with('success', 'Sucessfully Deleted!');
+        return redirect('products')->with('success', 'Sucessfully Deleted Image!');
     }
 }
