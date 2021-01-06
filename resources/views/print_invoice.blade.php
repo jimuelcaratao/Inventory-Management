@@ -61,7 +61,7 @@
                     <thead>
                        <tr>
                           <th>Item ID</th>
-                          <th class="text-center" >Product Code</th>
+                          <th class="text-center" >Product Name</th>
                           <th class="text-center">Quantity</th>
                           <th class="text-right" >Price</th>
                           <th class="text-right" >Discount</th>
@@ -73,7 +73,7 @@
                               <td>
                                 {{ $order_item->order_item_id }}
                               </td>
-                              <td class="text-center">{{ $order_item->barcode }}</td>
+                              <td class="text-center">{{ $order_item->product_name }}</td>
                               <td class="text-center">{{ $order_item->quantity }}</td>
                               <td class="text-right">${{ $order_item->price }}</td>
                               <td class="text-right">{{ $order_item->discount }}</td>

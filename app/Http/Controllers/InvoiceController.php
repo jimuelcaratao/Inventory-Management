@@ -99,6 +99,7 @@ class InvoiceController extends Controller
             ->first();
 
         $order_items = DB::table('order_items')
+            ->join('products', 'order_items.barcode', '=', 'products.barcode')
             ->where('transaction_no', $invoice_id)
             ->get();
 
