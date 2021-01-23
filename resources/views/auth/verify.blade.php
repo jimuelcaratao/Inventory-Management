@@ -1,5 +1,16 @@
 @extends('layouts.app')
 
+@push('links')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+    </li>
+    @if (Route::has('register'))
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+        </li>
+    @endif
+@endpush
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
